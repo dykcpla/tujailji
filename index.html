@@ -18,34 +18,28 @@
 /* 레이아웃: 폰 한 손 조작 — 상단 요약, 카드형 본문, 하단 탭바 + 거래 입력 버튼.
    한국 증권 관례대로 상승=빨강, 하락=파랑. */
 :root {
-  --bg: #f2f4f6;
-  --surface: #ffffff;
-  --ink: #16212b;
-  --muted: #5f6d7a;
-  --line: #e2e7ec;
-  --accent: #0f4c5c;
-  --accent-soft: #e3eff1;
-  --on-accent: #ffffff;
-  --up: #d1344a;
-  --down: #2563eb;
-  --warn: #b7700a;
-  --c-SPCX: #7a5ba6; --c-NSD100: #23877c; --c-SP500: #3b6cb0; --c-SCHD: #e0464e; --c-GOLD: #b49a2c; --c-CASH: #8d99a6;
+  --bg: #0b0e13;
+  --surface: #141922;
+  --surface2: #1b212c;
+  --ink: #f2f4f7;
+  --muted: #8b95a7;
+  --line: rgba(255, 255, 255, 0.07);
+  --accent: #7c9cff;
+  --accent-soft: rgba(124, 156, 255, 0.14);
+  --on-accent: #0b0e13;
+  --up: #ff5c6c;
+  --down: #5b9bff;
+  --warn: #f5b547;
+  --c-SPCX: #a78bfa; --c-NSD100: #2dd4bf; --c-SP500: #60a5fa; --c-SCHD: #ff6b6b; --c-GOLD: #fbbf24; --c-CASH: #94a3b8;
   --font-body: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
   --font-display: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
-  --r: 14px;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e1317; --surface: #172028; --ink: #e6ecf1; --muted: #93a2ae; --line: #26323c;
-    --accent: #5cb8ae; --accent-soft: #1c3135; --on-accent: #0b1a1c; --up: #ff6b7c; --down: #73a2ff; --warn: #f0a640;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0e1317; --surface: #172028; --ink: #e6ecf1; --muted: #93a2ae; --line: #26323c;
-  --accent: #5cb8ae; --accent-soft: #1c3135; --on-accent: #0b1a1c; --up: #ff6b7c; --down: #73a2ff; --warn: #f0a640;
+  --r: 20px;
   color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f3f5f9; --surface: #ffffff; --surface2: #f5f7fb; --ink: #0f172a; --muted: #64748b; --line: rgba(15, 23, 42, 0.08);
+  --accent: #3b5bdb; --accent-soft: rgba(59, 91, 219, 0.1); --on-accent: #ffffff; --up: #e5384b; --down: #2563eb; --warn: #c77d0a;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
@@ -191,6 +185,77 @@ body.ro [data-act="editTrade"], body.ro [data-act="editMonth"], body.ro [data-ac
 input:disabled, select:disabled { border-color: transparent !important; background: transparent !important; color: var(--ink); -webkit-text-fill-color: var(--ink); opacity: 1; padding-left: 0; padding-right: 0; appearance: none; -webkit-appearance: none; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 @media (max-width: 370px) { .kv { grid-template-columns: 1fr; } .hero .big { font-size: 26px; } }
+
+/* ===== 세련된 다크 테마 ===== */
+body { background: var(--bg); color: var(--ink); letter-spacing: -0.01em; }
+header.top { background: rgba(11, 14, 19, 0.82); -webkit-backdrop-filter: saturate(160%) blur(16px); backdrop-filter: saturate(160%) blur(16px); border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+:root[data-theme="light"] header.top { background: rgba(243, 245, 249, 0.86); }
+header.top h1 { font-size: 21px; font-weight: 800; letter-spacing: -0.035em; }
+header.top .sub { font-size: 11.5px; }
+.wrap { padding-top: 6px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; }
+.hero { position: relative; overflow: hidden; color: #f4f6fa; border: 1px solid rgba(255, 255, 255, 0.08); padding: 22px 20px 18px; border-radius: 24px;
+  background: radial-gradient(130% 120% at 100% 0%, rgba(124, 156, 255, 0.30) 0%, rgba(124, 156, 255, 0) 55%), radial-gradient(90% 90% at 0% 100%, rgba(45, 212, 191, 0.16) 0%, rgba(45, 212, 191, 0) 60%), linear-gradient(165deg, #1c2536 0%, #11161f 100%);
+  box-shadow: 0 20px 44px -24px rgba(0, 0, 0, 0.7); }
+.hero .lab { font-size: 13px; color: rgba(244, 246, 250, 0.68); opacity: 1; font-weight: 500; }
+.hero .big { font-size: 34px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.12; margin: 6px 0 6px; color: #fff; }
+.hero .big.xl { font-size: 44px; }
+.hero .big .u { font-size: 0.5em; font-weight: 700; margin: 0 6px 0 2px; color: rgba(244, 246, 250, 0.72); letter-spacing: 0; }
+.hero .exact { font-size: 13px; color: rgba(244, 246, 250, 0.58); font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.hero .gainchip { font-size: 12.5px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: rgba(255, 92, 108, 0.16); color: #ff8592; }
+.hero .gainchip.neg { background: rgba(91, 155, 255, 0.16); color: #8db8ff; }
+.hero .spark { display: block; margin: 12px -4px 2px; }
+.hero .row3 { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); gap: 6px; }
+.hero .row3 > * { border-radius: 10px; }
+.hero .row3 b { font-size: 16px; font-weight: 750; color: #fff; }
+.hero .row3 span { color: rgba(244, 246, 250, 0.58); opacity: 1; }
+.hero .tapzone { cursor: pointer; }
+.hero .up, .hero .row3 .up { color: #ff8592; } .hero .down { color: #8db8ff; }
+.goal { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; cursor: pointer; }
+.pricebar { margin: 4px 2px 0; }
+.tiles { gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 14px 13px; position: relative; transition: transform .12s ease; }
+.tile .k { font-size: 12px; color: var(--muted); }
+.tile .v { font-size: 18px; font-weight: 750; letter-spacing: -0.025em; margin-top: 3px; }
+.tile .s { margin-top: 2px; }
+.tile.tap { cursor: pointer; }
+.tile.tap::after, .tapcard::after { content: ""; position: absolute; right: 14px; top: 17px; width: 6px; height: 6px; border-right: 1.8px solid var(--muted); border-top: 1.8px solid var(--muted); transform: rotate(45deg); opacity: 0.7; }
+.tapcard { position: relative; cursor: pointer; }
+.tile.tap:active, .tapcard:active, .goal:active, .hero .tapzone:active { transform: scale(0.985); opacity: .85; }
+.legend div { padding: 3px 0; cursor: pointer; border-radius: 8px; }
+.legend { gap: 4px 16px; }
+nav.tabs { background: rgba(13, 17, 23, 0.9); -webkit-backdrop-filter: saturate(160%) blur(18px); backdrop-filter: saturate(160%) blur(18px); border-top: 1px solid var(--line); }
+:root[data-theme="light"] nav.tabs { background: rgba(255, 255, 255, 0.92); }
+.tab { position: relative; padding: 9px 0 10px; color: var(--muted); }
+.tab[aria-current="page"] { color: var(--ink); font-weight: 700; }
+.tab[aria-current="page"] svg { color: var(--accent); }
+.tab[aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 50%; width: 22px; height: 3px; margin-left: -11px; border-radius: 0 0 3px 3px; background: var(--accent); }
+.btn { border-radius: 12px; background: var(--surface2); border-color: var(--line); color: var(--ink); }
+.btn.pri { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.btn.ghost { background: transparent; }
+.chip { background: var(--surface); border-color: var(--line); color: var(--ink); padding: 7px 14px; }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: transparent; font-weight: 700; }
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+.li { padding: 13px 16px; border-bottom-color: var(--line); }
+.pill { background: var(--accent-soft); color: var(--accent); }
+.pill.gray { background: rgba(127, 127, 127, 0.12); color: var(--muted); }
+.sec-t { margin: 26px 4px 10px; }
+.sec-t h2 { font-size: 16px; font-weight: 750; letter-spacing: -0.025em; }
+.mhead { margin: 20px 4px 8px; }
+.sheet { background: var(--surface); border-radius: 26px 26px 0 0; padding-left: 18px; padding-right: 18px; }
+.scrim { background: rgba(0, 0, 0, 0.55); }
+.preview, .field input, .field select, .field textarea, input.cell { background: var(--surface2); border-color: var(--line); }
+th { color: var(--muted); border-bottom-color: var(--line); }
+td { border-bottom-color: var(--line); }
+.toast { background: #f2f4f7; color: #0b0e13; font-weight: 600; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+.hcard .nm { font-size: 16.5px; font-weight: 750; letter-spacing: -0.02em; }
+.hcard .ev b { font-size: 16.5px; font-weight: 750; }
+.banner { background: rgba(245, 181, 71, 0.12); border-radius: 14px; }
+.dsum { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.dsum div { background: var(--surface2); border-radius: 14px; padding: 12px; }
+.dsum span { display: block; font-size: 12px; color: var(--muted); }
+.dsum b { font-size: 16px; font-variant-numeric: tabular-nums; }
+@media (max-width: 370px) { .hero .big.xl { font-size: 38px; } }
 #pwaSetup { position: fixed; inset: 0; z-index: 80; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
 #pwaSetup .setup-in { width: 100%; max-width: 420px; display: grid; gap: 12px; }
 #pwaSetup h2 { margin: 0; font-size: 22px; }
@@ -273,6 +338,12 @@ input:disabled, select:disabled { border-color: transparent !important; backgrou
       document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
       return Promise.resolve({ status: 'saved' });
     }
+  };
+  var W = null, wid = 0, wq = {};
+  window.__parseXlsx = function (b64, prev) {
+    if (!window.Worker) return Promise.reject({ code: 'tool_error', message: 'no worker' });
+    if (!W) { W = new Worker('worker.js'); W.onmessage = function (e) { var p = wq[e.data.id]; if (!p) return; delete wq[e.data.id]; if (e.data.ok) p.res(e.data.o); else p.rej({ code: 'tool_error', message: e.data.msg }); }; }
+    return new Promise(function (res, rej) { var id = ++wid; wq[id] = { res: res, rej: rej }; W.postMessage({ id: id, b64: b64, prev: JSON.parse(JSON.stringify(prev)) }); });
   };
   window.claude = { use: function (n) { return Promise.resolve(n === 'db' ? db : n === 'mcp' ? mcp : n === 'downloads' ? downloads : null); } };
 
@@ -899,10 +970,14 @@ function driveSync(force, first) {
       if (!f) { syncMsg('none', '구글 드라이브에 「투자일지」 엑셀 파일이 없습니다.'); if (first && !ready()) { S.mode = 'empty'; scheduleRender(); } return; }
       if (!force && st.driveFileId === f.id && st.driveModified === f.modifiedTime) { syncMsg('ok', '최신 상태 · ' + f.title); return; }
       syncMsg('busy', '새 엑셀을 불러오는 중 · ' + f.title);
-      return Promise.all([loadXLSX(), mcp.callTool(GD, 'download_file_content', { fileId: f.id }, { cache: false })]).then(function (r) {
-        var b64 = findB64(r[1].payload) || findB64(r[1].content);
+      var prev = { settings: S.settings, kids: S.kids, plan: S.plan, dividend: S.dividend };
+      var parse = function (b64) { return window.__parseXlsx ? window.__parseXlsx(b64, prev) : loadXLSX().then(function (X) { return XIMP.parse(X, b64bytes(b64), prev); }); };
+      if (!window.__parseXlsx) loadXLSX();
+      return mcp.callTool(GD, 'download_file_content', { fileId: f.id }, { cache: false }).then(function (res) {
+        var b64 = findB64(res.payload) || findB64(res.content);
         if (!b64) throw { code: 'nofile' };
-        var o = XIMP.parse(r[0], b64bytes(b64), S);
+        return parse(b64);
+      }).then(function (o) {
         o.settings.importedAt = new Date().toISOString(); o.settings.importFile = f.title;
         o.settings.driveFileId = f.id; o.settings.driveModified = f.modifiedTime;
         return importAll(o).then(function () { if (first) S.mode = 'db'; syncMsg('ok', '최신 상태 · ' + f.title); toast('엑셀 최신 내용을 불러왔습니다.'); scheduleRender(); });
@@ -1026,25 +1101,27 @@ function vBoard(C) {
   var B = C.B, st = S.settings, M = C.M, MB = C.MB;
   var goalW = Math.min(1, B.total / st.goal);
   var h = '<div class="stack" style="margin-top:6px">';
-  h += '<section class="card hero"><div class="lab">총 금융자산</div><div class="big">' + eok(B.total) + '</div>' +
-    '<div class="row3"><div><b>' + wonS(B.totalGain).replace('원', '') + '</b><span>총 수익(원)</span></div><div><b>' + pct(B.totalGainRate, 2, true) + '</b><span>총 수익률</span></div><div><b>' + pct(B.allAnnual, 2, true) + '</b><span>연평균</span></div></div>' +
+  h += '<section class="card hero"><div class="tapzone" data-act="detail" data-k="total"><div class="lab">총 금융자산</div><div class="big xl">' + eokHTML(B.total) + '</div>' +
+    '<div class="exact"><span>' + won(B.total) + '</span><span class="gainchip' + (B.totalGain < 0 ? ' neg' : '') + '">' + (B.totalGain >= 0 ? '▲ ' : '▼ ') + man(Math.abs(B.totalGain), 0) + ' · ' + pct(B.totalGainRate, 2, true) + '</span></div></div>' +
+    spark(M.rows.map(function (r) { return r.total; })) +
+    '<div class="row3"><div class="tapzone" data-act="detail" data-k="gain"><b>' + wonS(B.totalGain).replace('원', '') + '</b><span>총 수익(원)</span></div><div class="tapzone" data-act="detail" data-k="gain"><b>' + pct(B.totalGainRate, 2, true) + '</b><span>총 수익률</span></div><div class="tapzone" data-act="detail" data-k="annual"><b>' + pct(B.allAnnual, 2, true) + '</b><span>연평균</span></div></div>' +
     goalBlock(B.total, st.goal, M) + '</section>';
   h += '<div class="pricebar"><span class="muted">' + esc(st.priceAt || '') + ' 시세 기준</span><button class="btn sm" data-act="prices" type="button">시세·환율 입력</button></div>';
   // 비중
   h += '<section class="card">' + allocBar(byAmt(B.groups)) + '<div class="legend">' +
-    byAmt(B.groups).map(function (g) { return '<div>' + dot(g.g) + GROUP_NAME[g.g] + '<span class="r">' + pct(g.w, 1) + ' <span class="muted small">' + int(Math.round(g.amt / 1e4 / 10) * 10) + '만</span></span></div>'; }).join('') + '</div></section>';
+    byAmt(B.groups).map(function (g) { return '<div data-act="detail" data-k="group" data-g="' + esc(g.g) + '">' + dot(g.g) + GROUP_NAME[g.g] + '<span class="r">' + pct(g.w, 1) + ' <span class="muted small">' + int(Math.round(g.amt / 1e4 / 10) * 10) + '만</span></span></div>'; }).join('') + '</div></section>';
   // 타일
   h += '<div class="tiles">' +
-    tile('매수가(원금)', won(B.cost), '') +
-    tile('평가총액', won(B.eval), '<span class="' + cls(B.profit) + '">' + wonS(B.profit) + ' (' + pct(B.rate, 2, true) + ')</span>') +
-    tile('세후 배당 누적', won(B.divAll), '매수가 대비 ' + pct(B.divYield, 2)) +
-    tile('실현손익 누적', '<span class="' + cls(B.realizedSum) + '">' + wonS(B.realizedSum) + '</span>', '매도 ' + B.realized.length + '건') +
-    tile('보유 USD', usd(B.usdHeld), '평균 매수환율 ' + dec(B.avgFx, 2)) +
-    tile('환차손익', '<span class="' + cls(B.fxGain) + '">' + wonS(B.fxGain) + '</span>', '현재환율 ' + dec(B.fx, 2)) +
-    tile('투자기간', MB.months + '개월', '월평균 매수 ' + dec(MB.avg / 1e4, 1) + '만') +
-    tile('현금계', won(B.cash), '정기예금 ' + man(B.deposit) + ' · 예수금 ' + man(B.cashBal)) +
+    tile('매수가(원금)', won(B.cost), '종목별 매수액 보기', 'cost') +
+    tile('평가총액', won(B.eval), '<span class="' + cls(B.profit) + '">' + wonS(B.profit) + ' (' + pct(B.rate, 2, true) + ')</span>', 'eval') +
+    tile('세후 배당 누적', won(B.divAll), '매수가 대비 ' + pct(B.divYield, 2), 'div') +
+    tile('실현손익 누적', '<span class="' + cls(B.realizedSum) + '">' + wonS(B.realizedSum) + '</span>', '매도 ' + B.realized.length + '건', 'realized') +
+    tile('보유 USD', usd(B.usdHeld), '평균 매수환율 ' + dec(B.avgFx, 2), 'usd') +
+    tile('환차손익', '<span class="' + cls(B.fxGain) + '">' + wonS(B.fxGain) + '</span>', '현재환율 ' + dec(B.fx, 2), 'fx') +
+    tile('투자기간', MB.months + '개월', '월평균 매수 ' + dec(MB.avg / 1e4, 1) + '만', 'period') +
+    tile('현금계', won(B.cash), '정기예금 ' + man(B.deposit) + ' · 예수금 ' + man(B.cashBal), 'cash') +
     '</div>';
-  h += '<section class="card"><div class="hd" style="display:flex;align-items:center;gap:8px"><b>파킹 (미단기채 BIL)</b><span class="pill gray">매수환율 ' + dec(st.bilFx, 2) + '</span><span class="sp" style="flex:1"></span><b class="tnum">' + won(B.bilKrw) + '</b></div><div class="small muted tnum" style="margin-top:4px">' + usd(st.bilUsd) + ' · 환차 <span class="' + cls((B.fx - st.bilFx) * st.bilUsd) + '">' + wonS((B.fx - st.bilFx) * st.bilUsd) + '</span></div></section>';
+  h += '<section class="card tapcard" data-act="detail" data-k="cash"><div class="hd" style="display:flex;align-items:center;gap:8px;padding-right:18px"><b>파킹 (미단기채 BIL)</b><span class="pill gray">매수환율 ' + dec(st.bilFx, 2) + '</span><span class="sp" style="flex:1"></span><b class="tnum">' + won(B.bilKrw) + '</b></div><div class="small muted tnum" style="margin-top:4px">' + usd(st.bilUsd) + ' · 환차 <span class="' + cls((B.fx - st.bilFx) * st.bilUsd) + '">' + wonS((B.fx - st.bilFx) * st.bilUsd) + '</span></div></section>';
   // 종목
   h += secT('종목별 현황', '평가액 순');
   h += '<div class="hold">' + B.holdings.slice().sort(function (a, b) { return b.eval - a.eval; }).map(function (x) { return holdCard(x, B); }).join('') + '</div>';
@@ -1064,7 +1141,7 @@ function vBoard(C) {
   h += vTaxAccts(C);
   return h + '</div>';
 }
-var GROUP_HEX = { SPCX: '#7a5ba6', NSD100: '#23877c', 'S&P500': '#3b6cb0', SCHD: '#e0464e', GOLD: '#b49a2c', CASH: '#8d99a6' };
+var GROUP_HEX = { SPCX: '#a78bfa', NSD100: '#2dd4bf', 'S&P500': '#60a5fa', SCHD: '#ff6b6b', GOLD: '#fbbf24', CASH: '#94a3b8' };
 function allocBar(groups) {
   var x = 0, segs = groups.map(function (g) { var w = g.w * 100, r = '<rect x="' + x.toFixed(3) + '" y="0" width="' + Math.max(0, w - 0.4).toFixed(3) + '" height="14" fill="' + GROUP_HEX[g.g] + '"/>'; x += w; return r; }).join('');
   return '<svg class="allocsvg" viewBox="0 0 100 14" preserveAspectRatio="none" width="100%" height="14" role="img" aria-label="자산군 비중" style="display:block;border-radius:7px;overflow:hidden"><defs><clipPath id="ac"><rect width="100" height="14" rx="3.5"/></clipPath></defs><g clip-path="url(#ac)">' + segs + '</g></svg>';
@@ -1074,9 +1151,69 @@ function wbarSvg(w, g) { return '<svg viewBox="0 0 100 4" preserveAspectRatio="n
 function goalBlock(total, goal, M) {
   var w = Math.min(1, total / goal), left = Math.max(0, goal - total);
   var when = M.reach ? M.reach.getFullYear() + '년 ' + (M.reach.getMonth() + 1) + '월' : '-';
-  return '<div class="goal"><div class="g-top"><span class="g-lab">' + eok(goal).replace('원', '') + ' 목표 달성</span><span class="g-pct">' + pct(w, 1) + '</span></div>' +
+  return '<div class="goal" data-go="monthly"><div class="g-top"><span class="g-lab">' + eok(goal).replace('원', '') + ' 목표 달성</span><span class="g-pct">' + pct(w, 1) + '</span></div>' +
     '<svg viewBox="0 0 100 10" preserveAspectRatio="none" width="100%" height="8" aria-label="목표 달성률 ' + pct(w, 1) + '" role="img" style="display:block;margin:6px 0 10px"><rect width="100" height="10" rx="5" fill="#ffffff" fill-opacity=".22"/><rect width="' + Math.max(2, w * 100).toFixed(2) + '" height="10" rx="5" fill="#f5b83d"/></svg>' +
     '<div class="g-grid"><div><span>달성 예상</span><b>' + when + '</b></div><div><span>남은 기간</span><b>' + (M.years != null ? dec(M.years, 1) + '년' : '-') + '</b></div><div><span>남은 금액</span><b>' + eok(left).replace('원', '') + '</b></div><div><span>달성 시 나이</span><b>만 ' + (M.ageReach != null ? dec(M.ageReach, 1) : '-') + '세</b></div></div></div>';
+}
+function eokHTML(x) {
+  x = Math.round(x || 0); var neg = x < 0; x = Math.abs(x);
+  var e = Math.floor(x / 1e8), m = Math.round((x - e * 1e8) / 1e4); if (m === 10000) { e++; m = 0; }
+  return (neg ? '-' : '') + (e ? e + '<span class="u">억</span>' : '') + (m || !e ? m.toLocaleString('ko-KR') + '<span class="u">만원</span>' : '<span class="u">원</span>');
+}
+function spark(vals) {
+  if (!vals || vals.length < 2) return '';
+  var W = 300, H = 46, mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals), rg = mx - mn || 1;
+  var pts = vals.map(function (v, i) { return [(i / (vals.length - 1)) * W, H - 4 - ((v - mn) / rg) * (H - 10)]; });
+  var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+  var last = pts[pts.length - 1];
+  return '<svg class="spark" viewBox="0 0 ' + W + ' ' + H + '" width="100%" height="46" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="spg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c9cff" stop-opacity=".35"/><stop offset="1" stop-color="#7c9cff" stop-opacity="0"/></linearGradient></defs><path d="' + d + ' L' + W + ' ' + H + ' L0 ' + H + 'Z" fill="url(#spg)"/><path d="' + d + '" fill="none" stroke="#9db4ff" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="' + last[0] + '" cy="' + last[1] + '" r="3.5" fill="#fff"/></svg>';
+}
+function dsum(items) { return '<div class="dsum">' + items.map(function (i) { return '<div><span>' + i[0] + '</span><b class="' + (i[2] || '') + '">' + i[1] + '</b></div>'; }).join('') + '</div>'; }
+function tbl(head, rows, tot) { return '<div class="tbl-wrap"><table><thead><tr>' + head.map(function (h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>' + rows.join('') + (tot || '') + '</tbody></table></div>'; }
+function sheetDetail(k, g) {
+  var C = ctx(), B = C.B, H = B.holdings.slice().sort(function (a, b) { return b.eval - a.eval; }), title = '', body = '';
+  if (k === 'div') { location.hash = 'dividend'; return; }
+  if (k === 'period') { location.hash = 'buys'; return; }
+  if (k === 'total') {
+    title = '총 금융자산 구성';
+    body = dsum([['총 금융자산', won(B.total)], ['주식 평가액', won(B.eval)], ['현금(예금+예수금)', won(B.cash)], ['파킹(BIL)', won(B.bilKrw)]]) +
+      tbl(['구분', '금액', '비중'], byAmt(B.groups).map(function (x) { return '<tr><td>' + dot(x.g) + ' ' + GROUP_NAME[x.g] + '</td><td>' + int(x.amt) + '</td><td>' + pct(x.w, 1) + '</td></tr>'; }));
+  } else if (k === 'gain' || k === 'annual') {
+    title = k === 'gain' ? '총 수익 내역' : '연평균 수익률';
+    body = dsum([['평가손익', wonS(B.profit), cls(B.profit)], ['세후 배당 누적', wonS(B.divAll), cls(B.divAll)], ['실현손익', wonS(B.realizedSum), cls(B.realizedSum)], ['합계 (' + pct(B.totalGainRate, 2, true) + ')', wonS(B.totalGain), cls(B.totalGain)]]) +
+      tbl(['종목', '평가손익', '수익률', '연평균'], H.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td class="' + cls(x.profit) + '">' + int(x.profit) + '</td><td class="' + cls(x.rate) + '">' + pct(x.rate, 1) + '</td><td class="' + cls(x.annual) + '">' + pct(x.annual, 1) + '</td></tr>'; })) +
+      '<p class="note">총 수익 = 평가손익 + 세후 배당 + 실현손익. 수익률은 매수가(원금) 대비입니다.</p>';
+  } else if (k === 'cost' || k === 'eval') {
+    title = k === 'cost' ? '종목별 매수액' : '종목별 평가액';
+    body = dsum([['매수가(원금)', won(B.cost)], ['평가총액', won(B.eval)], ['평가손익', wonS(B.profit), cls(B.profit)], ['수익률', pct(B.rate, 2, true), cls(B.rate)]]) +
+      tbl(['종목', '매수액', '평가액', '수익률'], H.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + int(x.cost) + '</td><td>' + int(x.eval) + '</td><td class="' + cls(x.rate) + '">' + pct(x.rate, 1) + '</td></tr>'; }), '<tr class="tot"><td>합계</td><td>' + int(B.cost) + '</td><td>' + int(B.eval) + '</td><td class="' + cls(B.rate) + '">' + pct(B.rate, 1) + '</td></tr>');
+  } else if (k === 'realized') {
+    title = '실현손익 내역';
+    var R = B.realized;
+    body = dsum([['실현손익 합계', wonS(B.realizedSum), cls(B.realizedSum)], ['매도 건수', R.length + '건']]) +
+      '<div class="list">' + R.map(function (r) {
+        return '<div class="li" style="cursor:default"><div class="d"><b>' + (r.d ? r.d.slice(8) : '-') + '</b>' + (r.d ? r.d.slice(2, 4) + '.' + r.d.slice(5, 7) : '') + '</div><div class="mid"><div class="t">' + esc(r.t) + '</div><div class="s">' + dec(r.q, 0) + '주 · 매도 ' + int(r.amt) + ' · 원가 ' + int(r.cost) + (r.days ? ' · ' + r.days + '일 보유' : '') + '</div></div><div class="r"><span class="' + cls(r.gain) + '">' + wonS(r.gain) + '</span><div class="s">' + pct(r.cost ? r.gain / r.cost : 0, 2, true) + '</div></div></div>';
+      }).join('') + '</div>';
+  } else if (k === 'usd' || k === 'fx') {
+    var U = H.filter(function (x) { return x.c === 'USD'; }), bilG = (B.fx - S.settings.bilFx) * S.settings.bilUsd;
+    title = k === 'usd' ? '보유 달러 자산' : '환차손익 내역';
+    body = dsum([['보유 USD', usd(B.usdHeld)], ['평균 매수환율', dec(B.avgFx, 2)], ['현재환율', dec(B.fx, 2)], ['환차손익', wonS(B.fxGain), cls(B.fxGain)]]) +
+      (k === 'usd'
+        ? tbl(['종목', '수량', '현재가', '평가(USD)', '원화'], U.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + int(x.qty) + '</td><td>' + usd(x.price) + '</td><td>' + usd(x.evalUsd) + '</td><td>' + int(x.eval) + '</td></tr>'; }), '<tr><td>BIL(파킹)</td><td></td><td></td><td>' + usd(S.settings.bilUsd) + '</td><td>' + int(B.bilKrw) + '</td></tr>')
+        : tbl(['종목', '매수환율', '현재환율', '환차손익'], U.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + dec(x.buyFx, 2) + '</td><td>' + dec(B.fx, 2) + '</td><td class="' + cls(x.fxGain) + '">' + int(x.fxGain) + '</td></tr>'; }), '<tr><td>BIL(파킹)</td><td>' + dec(S.settings.bilFx, 2) + '</td><td>' + dec(B.fx, 2) + '</td><td class="' + cls(bilG) + '">' + int(bilG) + '</td></tr>') + '<p class="note">환차손익 = (현재환율 − 매수환율) × 평단 × 수량.</p>');
+  } else if (k === 'cash') {
+    title = '현금·파킹';
+    body = dsum([['정기예금', won(B.deposit)], ['예수금', won(B.cashBal)], ['파킹 BIL', usd(S.settings.bilUsd) + ' · ' + won(B.bilKrw)], ['현금+파킹 합계', won(B.cash + B.bilKrw)]]) +
+      '<p class="note">BIL 매수환율 ' + dec(S.settings.bilFx, 2) + ' · 연배당률 ' + pct(S.settings.bilDy, 2) + ' · 예상 연 세후배당 ' + won(S.settings.bilDy * B.bilKrw * (1 - S.settings.bilTax)) + '</p>';
+  } else if (k === 'group') {
+    var gr = B.groups.filter(function (x) { return x.g === g; })[0] || { amt: 0, w: 0 };
+    title = GROUP_NAME[g] + ' 구성';
+    if (g === 'CASH') { sheetDetail('cash'); return; }
+    var G = H.filter(function (x) { return x.g === g; });
+    body = dsum([['평가액', won(gr.amt)], ['전체 대비', pct(gr.w, 1)]]) +
+      tbl(['종목', '계좌', '평가액', '수익률'], G.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + esc(x.acct) + '</td><td>' + int(x.eval) + '</td><td class="' + cls(x.rate) + '">' + pct(x.rate, 1) + '</td></tr>'; }));
+  } else return;
+  openSheet(title, body, '<button class="btn" type="button" data-act="closeSheet">닫기</button>');
 }
 function byAmt(gs) { return gs.slice().sort(function (a, b) { return b.amt - a.amt; }); }
 function vBuys(C) {
@@ -1096,7 +1233,7 @@ function vBuys(C) {
   }).join('') + '</div><p class="note">월 매수액은 엑셀과 같이 「월 매수 집계」로 설정된 종목만 더합니다(기본: 금현물 제외).</p>';
   return h + '</div>';
 }
-function tile(k, v, s) { return '<div class="tile"><div class="k">' + k + '</div><div class="v">' + v + '</div>' + (s ? '<div class="s muted">' + s + '</div>' : '') + '</div>'; }
+function tile(k, v, s, key) { return '<div class="tile' + (key ? ' tap" data-act="detail" data-k="' + key : '') + '"><div class="k">' + k + '</div><div class="v">' + v + '</div>' + (s ? '<div class="s muted">' + s + '</div>' : '') + '</div>'; }
 function secT(t, meta) { return '<div class="sec-t"><h2>' + t + '</h2>' + (meta ? '<span class="meta">' + meta + '</span>' : '') + '</div>'; }
 function holdCard(x, B) {
   var usdT = x.c === 'USD', open = !!UI.openHold[x.t];
@@ -1372,7 +1509,7 @@ function vSetup() {
   h += '<section class="card stack"><div><b>구글 드라이브 자동 불러오기</b><p class="small" style="margin:4px 0 0" id="syncline">' + esc(SYNC.msg || '앱을 열 때마다 구글 드라이브의 「투자일지」 엑셀이 바뀌었는지 확인합니다.') + '</p>' + (st.driveModified ? '<p class="note" style="margin:2px 0 0">엑셀 수정 시각: ' + esc(new Date(st.driveModified).toLocaleString('ko-KR')) + '</p>' : '') + '</div><button class="btn" type="button" data-act="syncNow">지금 확인하기</button>' + (SYNC.files && SYNC.files.length > 1 ? '<div class="field"><label for="drvPick">사용할 파일</label><select id="drvPick" data-drv="1">' + SYNC.files.map(function (f) { return '<option value="' + esc(f.id) + '"' + (f.id === st.driveFileId ? ' selected' : '') + '>' + esc(f.title) + '</option>'; }).join('') + '</select></div>' : '') + '</section>';
   h += '<section class="card stack"><label class="btn" for="xlsFile2">파일에서 직접 불러오기 (.xlsx)</label><input type="file" id="xlsFile2" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="hide" data-xls="1">' + (st.importedAt ? '<p class="note" style="margin:0">마지막 불러오기: ' + esc(st.importFile || '') + ' · ' + esc(new Date(st.importedAt).toLocaleString('ko-KR')) + '</p>' : '') + '<button class="btn" type="button" data-act="exportXlsx">엑셀 파일로 내보내기 (.xlsx)</button><button class="btn" type="button" data-act="exportJson">전체 백업 내보내기 (.json)</button><label class="btn" for="impFile">백업 파일 불러오기</label><input type="file" id="impFile" accept=".json,application/json" class="hide" data-imp="1"><p class="note" style="margin:0">데이터는 이 프로그램의 저장소에 보관되며 소유자만 읽고 쓸 수 있습니다. 백업을 불러오면 지금 데이터를 모두 바꿉니다.</p></section>';
   h += '<section class="card"><b>휴대폰 입력</b><div class="seg" style="margin-top:8px">' + [['0', '보기 전용'], ['1', '직접 입력 허용']].map(function (o) { return '<button type="button" data-act="editMode" data-v="' + o[0] + '" aria-pressed="' + ((isRO() ? '0' : '1') === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</div><p class="note">보기 전용이면 거래·시세·배당 입력 버튼이 숨겨지고, 엑셀에서 불러온 값만 보여 줍니다. SIM의 가정 가격은 계속 바꿀 수 있습니다.</p></section>';
-  h += '<section class="card"><b>화면 테마</b><div class="seg" style="margin-top:8px">' + [['auto', '자동'], ['light', '밝게'], ['dark', '어둡게']].map(function (o) { return '<button type="button" data-act="theme" data-v="' + o[0] + '" aria-pressed="' + ((localGet('theme') || 'auto') === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</div></section>';
+  h += '<section class="card"><b>화면 테마</b><div class="seg" style="margin-top:8px">' + [['auto', '어둡게(기본)'], ['light', '밝게']].map(function (o) { return '<button type="button" data-act="theme" data-v="' + o[0] + '" aria-pressed="' + ((localGet('theme') || 'auto') === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</div></section>';
   return h + '</div>';
 }
 function fld(id, label, doc, key, val, step, type) { return '<div class="field"><label for="' + id + '">' + label + '</label><input id="' + id + '" type="number" inputmode="decimal" step="' + (step || '1') + '" data-doc="' + doc + '" data-key="' + esc(key) + '"' + (type ? ' data-type="' + type + '"' : '') + ' value="' + (type === 'pct' ? +(n(val) * 100).toFixed(4) : n(val)) + '"></div>'; }
@@ -1651,6 +1788,7 @@ document.addEventListener('click', function (e) {
   var a = e.target.closest('[data-act]'); if (!a) return;
   var act = a.dataset.act;
   if (act === 'closeSheet') { if (a.classList.contains('scrim') && e.target !== a) return; closeSheet(); return; }
+  if (act === 'detail') { if (ready()) sheetDetail(a.dataset.k, a.dataset.g); return; }
   if (act === 'firstSync') { S.mode = 'importing'; render(); driveSync(true, true); return; }
   if (!ready()) return;
   if (isRO() && EDIT_ACTS.indexOf(act) >= 0) return;
