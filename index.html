@@ -262,9 +262,21 @@ td { border-bottom-color: var(--line); }
 .mtbl > tbody > tr.mrow > td { padding: 13px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); text-align: right; cursor: pointer; }
 .mtbl > tbody > tr.mrow > td:first-child { text-align: left; }
 .mtbl > tbody > tr.mrow:active td { background: rgba(255, 255, 255, 0.04); }
-.mtbl > tbody > tr.mrow.open > td { border-bottom-color: transparent; background: rgba(124, 156, 255, 0.07); }
-.mtbl > tbody > tr.mdet > td { padding: 2px 6px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); background: rgba(124, 156, 255, 0.07); text-align: left; }
+.mtbl > tbody > tr.mrow.open > td { border-bottom-color: transparent; }
+.mtbl > tbody > tr.mdet > td { padding: 0 0 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); text-align: left; }
+.mtbl .mdet-box { margin: 0 !important; padding: 2px 8px 4px !important; background: #1a2232 !important; border: 1px solid rgba(124, 156, 255, 0.16); border-left: 3px solid rgba(124, 156, 255, 0.55); border-radius: 12px; box-shadow: none !important; }
+.mtbl .mdet-box table, .mtbl .mdet-box th, .mtbl .mdet-box td { background: transparent !important; }
+.mtbl .mdet-box tr td { border-bottom-color: rgba(255, 255, 255, 0.07) !important; }
+.mtbl .mdet-box thead th { color: #9fb2e6; }
+.mtbl > tbody > tr.mdet > td { max-width: 0; }
+.mtbl .mdet-box { overflow-x: auto; width: 100%; box-sizing: border-box; }
+.mtbl .mdet-box table { font-size: 12px; width: 100%; }
+.mtbl .mdet-box th, .mtbl .mdet-box td { padding: 8px 3px !important; white-space: nowrap; }
+.mtbl .mdet-box th:first-child, .mtbl .mdet-box td:first-child { padding-left: 2px !important; }
+:root[data-theme="light"] .mtbl .mdet-box { background: #eef2fb !important; border-color: rgba(70, 100, 200, 0.18); border-left-color: rgba(70, 100, 200, 0.55); }
+:root[data-theme="light"] .mtbl .mdet-box thead th { color: #4a5f9a; }
 .mtbl .cnt { display: inline-block; min-width: 22px; padding: 1px 7px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 700; text-align: center; }
+.fxref { color: var(--accent); font-size: 10px; margin-left: 1px; font-weight: 700; }
 .mtbl .ncnt { margin-left: 7px; font-size: 11.5px; color: var(--muted); font-weight: 500; }
 .mtbl .chev { margin-left: 6px; color: var(--muted); font-size: 11px; }
 :root[data-theme="light"] .mtbl > thead th { border-bottom-color: rgba(15, 23, 42, 0.16); }
@@ -1235,19 +1247,19 @@ function byAmt(gs) { return gs.slice().sort(function (a, b) { return b.amt - a.a
 function vBuys(C) {
   var MB = C.MB, cur = MB.map[today().slice(0, 7)];
   var h = '<div class="stack" style="margin-top:6px"><div class="tiles">' + tile('투자기간', MB.months + '개월', '매수한 달 기준') + tile('월평균 매수', man(MB.avg, 1), '천 원 아래 버림') + tile('이번 달 매수', won(cur ? cur.total : 0), cur ? Object.keys(cur.per).length + '종목' : '') + tile('누적 매수', man(MB.list.reduce(function (s, m) { return s + m.total; }, 0), 0), '집계 종목 합계') + '</div>';
-  var rows = MB.list.slice().reverse(), fxOf = {};
+  var rows = MB.list.slice().reverse(), fxOf = {}, FX_REF = {'2024-09':1332.8,'2024-10':1361.0,'2024-11':1393.4,'2024-12':1436.8,'2025-01':1455.5,'2025-02':1445.6,'2025-03':1457.0,'2025-04':1444.3,'2025-05':1394.5,'2025-06':1364.3};
   C.M.rows.forEach(function (r) { if (r.fx) fxOf[r.ym] = r.fx; });
   h += '<section class="card mtbl-card"><table class="mtbl"><thead><tr><th>연월</th><th>매수액</th><th>평균환율</th><th>종목</th></tr></thead><tbody>' + rows.map(function (m) {
-    var open = UI.openMonths[m.ym], fxm = fxOf[m.ym], names = byKrw(m.per);
-    var r = '<tr class="mrow' + (open ? ' open' : '') + '" data-act="toggleMonth" data-ym="' + m.ym + '"><td><b>' + m.ym.slice(2, 4) + '.' + m.ym.slice(5) + '</b><span class="ncnt">' + m.n + '건</span></td><td><b>' + man(m.total, 0) + '</b></td><td>' + (fxm ? dec(fxm, 0) : '<span class="muted">-</span>') + '</td><td><span class="cnt">' + names.length + '</span><span class="chev">' + (open ? '▴' : '▾') + '</span></td></tr>';
+    var open = UI.openMonths[m.ym], ref = m.ym <= '2025-06' && FX_REF[m.ym], fxm = ref || fxOf[m.ym], names = byKrw(m.per);
+    var r = '<tr class="mrow' + (open ? ' open' : '') + '" data-act="toggleMonth" data-ym="' + m.ym + '"><td><b>' + m.ym.slice(2, 4) + '.' + m.ym.slice(5) + '</b><span class="ncnt">' + m.n + '건</span></td><td><b>' + man(m.total, 0) + '</b></td><td>' + (fxm ? dec(fxm, 0) + (ref ? '<sup class="fxref">*</sup>' : '') : '<span class="muted">-</span>') + '</td><td><span class="cnt">' + names.length + '</span><span class="chev">' + (open ? '▴' : '▾') + '</span></td></tr>';
     if (open) {
-      r += '<tr class="mdet"><td colspan="4"><div class="tbl-wrap" style="margin:0;padding:0"><table><thead><tr><th>종목</th><th>원화</th><th>수량</th><th>평균</th><th>USD</th></tr></thead><tbody>' + names.map(function (t) {
+      r += '<tr class="mdet"><td colspan="4"><div class="tbl-wrap mdet-box"><table><thead><tr><th>종목</th><th>원화</th><th>수량</th><th>평균</th><th>USD</th></tr></thead><tbody>' + names.map(function (t) {
         var p = m.per[t], T0 = tk(t);
-        return '<tr><td>' + esc(t) + '</td><td><b>' + int(p.krw) + '</b></td><td>' + int(p.q) + '</td><td>' + (T0.c === 'USD' ? usd(p.usd / p.q, 3) : int(p.krw / p.q)) + '</td><td>' + (T0.c === 'USD' ? usd(p.usd) : '') + '</td></tr>';
+        return '<tr><td>' + esc(t) + '</td><td><b>' + int(p.krw) + '</b></td><td>' + int(p.q) + '</td><td>' + (T0.c === 'USD' ? usd(p.usd / p.q, 2) : int(p.krw / p.q)) + '</td><td>' + (T0.c === 'USD' ? usd(p.usd, 0) : '') + '</td></tr>';
       }).join('') + '<tr class="tot"><td>합계</td><td>' + int(m.total) + '</td><td colspan="3" class="muted small" style="text-align:left;padding-left:10px">집계 종목 기준</td></tr></tbody></table></div></td></tr>';
     }
     return r;
-  }).join('') + '</tbody></table></section><p class="note">매수액은 엑셀과 같이 「월 매수 집계」 종목만 더합니다(기본: 금현물 제외). 평균환율은 엑셀 월말일현황의 「평균환율」이고, 이번 달은 현재 환율입니다. 행을 누르면 종목별 내역이 펼쳐집니다.</p>';
+  }).join('') + '</tbody></table></section><p class="note">매수액은 엑셀과 같이 「월 매수 집계」 종목만 더합니다(기본: 금현물 제외). 평균환율은 엑셀 월말일현황의 「평균환율」이고, 이번 달은 현재 환율입니다. <sup class="fxref">*</sup>2025.06 이전은 참고용으로 한국은행 발표 서울 외환시장 월평균 원/달러 환율(종가 기준)을 표시합니다. 행을 누르면 종목별 내역이 펼쳐집니다.</p>';
   return h + '</div>';
 }
 function tile(k, v, s, key) { return '<div class="tile' + (key ? ' tap" data-act="detail" data-k="' + key : '') + '"><div class="k">' + k + '</div><div class="v">' + v + '</div>' + (s ? '<div class="s muted">' + s + '</div>' : '') + '</div>'; }
