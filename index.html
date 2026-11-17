@@ -262,18 +262,25 @@ td { border-bottom-color: var(--line); }
 .mtbl > tbody > tr.mrow > td { padding: 13px 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); text-align: right; cursor: pointer; }
 .mtbl > tbody > tr.mrow > td:first-child { text-align: left; }
 .mtbl > tbody > tr.mrow:active td { background: rgba(255, 255, 255, 0.04); }
-.mtbl > tbody > tr.mrow.open > td { border-bottom-color: transparent; }
+.mtbl > tbody > tr.mrow.open > td { border-bottom-color: transparent; background: #4a62d0 !important; color: #fff; }
+.mtbl > tbody > tr.mrow.open > td:first-child { border-radius: 12px 0 0 0; }
+.mtbl > tbody > tr.mrow.open > td:last-child { border-radius: 0 12px 0 0; }
+.mtbl > tbody > tr.mrow.open .ncnt { color: rgba(255, 255, 255, 0.78); }
+.mtbl > tbody > tr.mrow.open .cnt { background: rgba(255, 255, 255, 0.22); color: #fff; }
+.mtbl > tbody > tr.mrow.open .chev, .mtbl > tbody > tr.mrow.open .fxref, .mtbl > tbody > tr.mrow.open .muted { color: #fff; }
 .mtbl > tbody > tr.mdet > td { padding: 0 0 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.10); text-align: left; }
-.mtbl .mdet-box { margin: 0 !important; padding: 2px 8px 4px !important; background: #1a2232 !important; border: 1px solid rgba(124, 156, 255, 0.16); border-left: 3px solid rgba(124, 156, 255, 0.55); border-radius: 12px; box-shadow: none !important; }
+.mtbl .mdet-box { margin: 0 !important; padding: 2px 8px 4px !important; background: #1c2742 !important; border: 1px solid rgba(124, 156, 255, 0.38); border-top: 0; border-left: 3px solid #4a62d0; border-radius: 0 0 12px 12px; box-shadow: none !important; }
 .mtbl .mdet-box table, .mtbl .mdet-box th, .mtbl .mdet-box td { background: transparent !important; }
 .mtbl .mdet-box tr td { border-bottom-color: rgba(255, 255, 255, 0.07) !important; }
-.mtbl .mdet-box thead th { color: #9fb2e6; }
+.mtbl .mdet-box thead th { color: #b4c4ff; font-weight: 600; }
+.mtbl .mdet-box tr.tot td { color: #fff; }
+:root[data-theme="light"] .mtbl .mdet-box tr.tot td { color: inherit; }
 .mtbl > tbody > tr.mdet > td { max-width: 0; }
 .mtbl .mdet-box { overflow-x: auto; width: 100%; box-sizing: border-box; }
 .mtbl .mdet-box table { font-size: 12px; width: 100%; }
 .mtbl .mdet-box th, .mtbl .mdet-box td { padding: 8px 3px !important; white-space: nowrap; }
 .mtbl .mdet-box th:first-child, .mtbl .mdet-box td:first-child { padding-left: 2px !important; }
-:root[data-theme="light"] .mtbl .mdet-box { background: #eef2fb !important; border-color: rgba(70, 100, 200, 0.18); border-left-color: rgba(70, 100, 200, 0.55); }
+:root[data-theme="light"] .mtbl .mdet-box { background: #e7edfc !important; border-color: rgba(74, 98, 208, 0.35); border-left-color: #4a62d0; }
 :root[data-theme="light"] .mtbl .mdet-box thead th { color: #4a5f9a; }
 .mtbl .cnt { display: inline-block; min-width: 22px; padding: 1px 7px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 700; text-align: center; }
 .fxref { color: var(--accent); font-size: 10px; margin-left: 1px; font-weight: 700; }
