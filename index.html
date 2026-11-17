@@ -1235,11 +1235,11 @@ function byAmt(gs) { return gs.slice().sort(function (a, b) { return b.amt - a.a
 function vBuys(C) {
   var MB = C.MB, cur = MB.map[today().slice(0, 7)];
   var h = '<div class="stack" style="margin-top:6px"><div class="tiles">' + tile('투자기간', MB.months + '개월', '매수한 달 기준') + tile('월평균 매수', man(MB.avg, 1), '천 원 아래 버림') + tile('이번 달 매수', won(cur ? cur.total : 0), cur ? Object.keys(cur.per).length + '종목' : '') + tile('누적 매수', man(MB.list.reduce(function (s, m) { return s + m.total; }, 0), 0), '집계 종목 합계') + '</div>';
-  var rows = MB.list.slice().reverse(), prevOf = {};
-  MB.list.forEach(function (m, i) { prevOf[m.ym] = i ? MB.list[i - 1].total : null; });
-  h += '<section class="card mtbl-card"><table class="mtbl"><thead><tr><th>연월</th><th>매수액</th><th>전월 대비</th><th>종목</th></tr></thead><tbody>' + rows.map(function (m) {
-    var open = UI.openMonths[m.ym], pv = prevOf[m.ym], d = pv != null ? m.total - pv : null, names = byKrw(m.per);
-    var r = '<tr class="mrow' + (open ? ' open' : '') + '" data-act="toggleMonth" data-ym="' + m.ym + '"><td><b>' + m.ym.slice(2, 4) + '.' + m.ym.slice(5) + '</b><span class="ncnt">' + m.n + '건</span></td><td><b>' + man(m.total, 0) + '</b></td><td class="' + (d == null ? '' : cls(d)) + '">' + (d == null ? '-' : (d > 0 ? '+' : '') + man(d, 0)) + '</td><td><span class="cnt">' + names.length + '</span><span class="chev">' + (open ? '▴' : '▾') + '</span></td></tr>';
+  var rows = MB.list.slice().reverse(), fxOf = {};
+  C.M.rows.forEach(function (r) { if (r.fx) fxOf[r.ym] = r.fx; });
+  h += '<section class="card mtbl-card"><table class="mtbl"><thead><tr><th>연월</th><th>매수액</th><th>평균환율</th><th>종목</th></tr></thead><tbody>' + rows.map(function (m) {
+    var open = UI.openMonths[m.ym], fxm = fxOf[m.ym], names = byKrw(m.per);
+    var r = '<tr class="mrow' + (open ? ' open' : '') + '" data-act="toggleMonth" data-ym="' + m.ym + '"><td><b>' + m.ym.slice(2, 4) + '.' + m.ym.slice(5) + '</b><span class="ncnt">' + m.n + '건</span></td><td><b>' + man(m.total, 0) + '</b></td><td>' + (fxm ? dec(fxm, 0) : '<span class="muted">-</span>') + '</td><td><span class="cnt">' + names.length + '</span><span class="chev">' + (open ? '▴' : '▾') + '</span></td></tr>';
     if (open) {
       r += '<tr class="mdet"><td colspan="4"><div class="tbl-wrap" style="margin:0;padding:0"><table><thead><tr><th>종목</th><th>원화</th><th>수량</th><th>평균</th><th>USD</th></tr></thead><tbody>' + names.map(function (t) {
         var p = m.per[t], T0 = tk(t);
@@ -1247,7 +1247,7 @@ function vBuys(C) {
       }).join('') + '<tr class="tot"><td>합계</td><td>' + int(m.total) + '</td><td colspan="3" class="muted small" style="text-align:left;padding-left:10px">집계 종목 기준</td></tr></tbody></table></div></td></tr>';
     }
     return r;
-  }).join('') + '</tbody></table></section><p class="note">매수액은 엑셀과 같이 「월 매수 집계」 종목만 더합니다(기본: 금현물 제외). 행을 누르면 종목별 내역이 펼쳐집니다.</p>';
+  }).join('') + '</tbody></table></section><p class="note">매수액은 엑셀과 같이 「월 매수 집계」 종목만 더합니다(기본: 금현물 제외). 평균환율은 엑셀 월말일현황의 「평균환율」이고, 이번 달은 현재 환율입니다. 행을 누르면 종목별 내역이 펼쳐집니다.</p>';
   return h + '</div>';
 }
 function tile(k, v, s, key) { return '<div class="tile' + (key ? ' tap" data-act="detail" data-k="' + key : '') + '"><div class="k">' + k + '</div><div class="v">' + v + '</div>' + (s ? '<div class="s muted">' + s + '</div>' : '') + '</div>'; }
