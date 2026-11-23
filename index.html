@@ -158,8 +158,8 @@ input.cell { width: 100%; min-width: 76px; border: 1px solid var(--line); border
 .tag.s { background: color-mix(in srgb, var(--down) 14%, transparent); color: var(--down); }
 .tag.x { background: var(--line); color: var(--muted); }
 nav.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--surface); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
-nav.tabs .in { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.tab { border: 0; background: none; padding: 8px 0 9px; display: grid; justify-items: center; gap: 2px; font-size: 10.5px; white-space: nowrap; letter-spacing: -0.02em; color: var(--muted); cursor: pointer; }
+nav.tabs .in { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.tab { border: 0; background: none; padding: 8px 0 9px; display: grid; justify-items: center; gap: 2px; font-size: 10px; white-space: nowrap; letter-spacing: -0.02em; color: var(--muted); cursor: pointer; }
 .tab svg { width: 22px; height: 22px; }
 .tab[aria-current="page"] { color: var(--accent); font-weight: 700; }
 .fab { position: fixed; right: max(16px, calc(50% - 264px)); bottom: calc(70px + env(safe-area-inset-bottom)); z-index: 31; background: var(--accent); color: var(--on-accent); border: 0; border-radius: 99px; padding: 13px 18px; font-weight: 700; box-shadow: 0 6px 18px rgba(15,76,92,.35); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 15px; }
@@ -289,6 +289,45 @@ td { border-bottom-color: var(--line); }
 :root[data-theme="light"] .mtbl > thead th { border-bottom-color: rgba(15, 23, 42, 0.16); }
 :root[data-theme="light"] .mtbl > tbody > tr > td { border-bottom-color: rgba(15, 23, 42, 0.10) !important; }
 @media (max-width: 370px) { .hero .big.xl { font-size: 38px; } }
+
+/* 목표비중 */
+.tgview .tgh { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.tgview .tgh b { font-size: 15px; }
+.tgrow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); }
+.tgh + .tgrow { border-top: 0; }
+.tgl { display: flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; min-width: 0; flex-wrap: wrap; }
+.tgl small { flex-basis: 100%; font-size: 11.5px; font-weight: 500; color: var(--muted); margin-left: 17px; }
+.tgrow:first-of-type .tgl small, .tgl > small:only-child { margin-left: 0; }
+.stp { display: flex; align-items: center; flex: none; background: rgba(127, 127, 127, 0.10); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.stp .sb { width: 36px; height: 38px; border: 0; background: none; color: var(--accent); font-size: 20px; font-weight: 600; cursor: pointer; touch-action: manipulation; }
+.stp .sb:active { background: var(--accent-soft); }
+.stp input { width: 62px; height: 38px; border: 0; background: transparent; color: var(--text); text-align: right; font: inherit; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; padding: 0 2px; outline: none; }
+.stp input:focus { background: var(--accent-soft); }
+.stp .u { font-size: 12px; color: var(--muted); padding: 0 4px 0 3px; white-space: nowrap; }
+.pill.okp { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+.pill.warnp { background: rgba(251, 191, 36, 0.16); color: #fbbf24; }
+.tgbars { display: grid; gap: 10px; margin-top: 16px; }
+.tgb .tgbl { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 5px; color: var(--muted); }
+.tgb .tgbl b { color: var(--text); font-variant-numeric: tabular-nums; }
+.tglegend { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; font-size: 12px !important; }
+.tglegend div { display: flex; align-items: center; gap: 6px; }
+.tgt { width: 100%; table-layout: fixed; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.tgout-card { overflow: hidden; }
+.tgt th { font-size: 11.5px; font-weight: 600; color: var(--muted); text-align: right; padding: 6px 4px 8px; border-bottom: 1px solid var(--line); }
+.tgt th:first-child, .tgt td:first-child { text-align: left; }
+.tgt td { text-align: right; padding: 9px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tgt td b { display: block; font-size: 14px; }
+.tgt td small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.tgt td .nm { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13.5px; white-space: nowrap; }
+.tgt td small.up { color: var(--up); } .tgt td small.down { color: var(--down); }
+.tgt td:last-child b { color: var(--accent); }
+.tgt tr.tot td { border-bottom: 0; font-weight: 700; padding-top: 11px; }
+.tgt tr.tot td b { font-size: 12.5px; white-space: normal; word-break: keep-all; }
+.tgbar { position: sticky; bottom: calc(66px + env(safe-area-inset-bottom)); z-index: 5; display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); font-size: 12.5px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28); }
+.tgbar .ok { color: #34d399; font-weight: 600; }
+.tgbar .dif { color: #fbbf24; font-weight: 700; margin-right: auto; white-space: nowrap; }
+.tgbar.dirty { border-color: rgba(251, 191, 36, 0.45); }
+.tgbar .btn { flex: none; }
 #pwaSetup { position: fixed; inset: 0; z-index: 80; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
 #pwaSetup .setup-in { width: 100%; max-width: 420px; display: grid; gap: 12px; }
 #pwaSetup h2 { margin: 0; font-size: 22px; }
@@ -363,6 +402,13 @@ td { border-bottom-color: var(--line); }
       if (tool === 'download_file_content') return api('id=' + encodeURIComponent(input.fileId)).then(function (j) { return { payload: { content: j.b64 } }; });
       return Promise.reject({ code: 'bad_request', message: tool });
     }
+  };
+  /* --- 앱에서 바꾼 값을 엑셀 칸에 저장 (앱스 스크립트 w=1) --- */
+  window.__xlsxWrite = function (fileId, sheet, cells) {
+    return api('w=1&id=' + encodeURIComponent(fileId) + '&s=' + encodeURIComponent(sheet) + '&c=' + encodeURIComponent(JSON.stringify(cells))).then(function (j) {
+      if (!j || !j.ok) throw { code: 'old_script', message: '앱스 스크립트를 새 코드로 바꿔야 엑셀에 저장할 수 있습니다' };
+      return j;
+    });
   };
   var downloads = {
     save: function (o) {
@@ -647,7 +693,24 @@ var ENG = (function () {
     if (n < 1) return '미취학'; if (n <= 6) return '초' + n; if (n <= 9) return '중' + (n - 6); if (n <= 12) return '고' + (n - 9);
     if (n <= 16) return '대' + (n - 12); return '졸업';
   }
-  return { board: board, monthlyBuys: monthlyBuys, taxAccts: taxAccts, monthly: monthly, kid: kid, plan: plan, realized: realized, rowCost: rowCost, serial: serial, todayISO: todayISO, ageAt: ageAt, grade: grade, isClosed: isClosed, rdown: rdown };
+  /* 목표비중 시뮬레이션 — 엑셀 「목표비중」 시트와 같은 계산
+     N개월 후 = 현재 + 월매수×배분×N (현금은 + 월현금증가×N), 최종 = N개월 후 × (1+상승률) */
+  var TG_KEYS = ['SPCX', 'NSD100', 'S&P500', 'SCHD', 'GOLD', 'CASH'];
+  function target(groups, tg) {
+    var cur = {}; TG_KEYS.forEach(function (k) { cur[k] = 0; });
+    (groups || []).forEach(function (g) { if (cur[g.g] != null) cur[g.g] += g.amt; });
+    var m = tg.months || 0, rows = TG_KEYS.map(function (k) {
+      var add = k === 'CASH' ? (tg.cashInc || 0) * m : (tg.buy || 0) * ((tg.alloc || {})[k] || 0) * m;
+      var after = cur[k] + add, fin = after * (1 + ((tg.rise || {})[k] || 0));
+      return { g: k, cur: cur[k], add: add, after: after, fin: fin };
+    });
+    var T = { cur: 0, add: 0, after: 0, fin: 0 };
+    rows.forEach(function (r) { T.cur += r.cur; T.add += r.add; T.after += r.after; T.fin += r.fin; });
+    rows.forEach(function (r) { r.wCur = T.cur ? r.cur / T.cur : 0; r.wAfter = T.after ? r.after / T.after : 0; r.wFin = T.fin ? r.fin / T.fin : 0; });
+    var allocSum = 0; TG_KEYS.forEach(function (k) { if (k !== 'CASH') allocSum += (tg.alloc || {})[k] || 0; });
+    return { rows: rows, total: T, allocSum: allocSum, keys: TG_KEYS };
+  }
+  return { board: board, monthlyBuys: monthlyBuys, target: target, taxAccts: taxAccts, monthly: monthly, kid: kid, plan: plan, realized: realized, rowCost: rowCost, serial: serial, todayISO: todayISO, ageAt: ageAt, grade: grade, isClosed: isClosed, rdown: rdown };
 })();
 if (typeof module !== 'undefined') module.exports = ENG;
 
@@ -656,7 +719,7 @@ if (typeof module !== 'undefined') module.exports = ENG;
 /* ===== 엑셀(투자일지 .xlsx) → 프로그램 데이터 변환 ===== */
 var XIMP = (function () {
   function parse(X, buf, prev) {
-    var wb = X.read(buf, { type: 'array', cellFormula: true, cellDates: false, cellStyles: false, cellHTML: false, cellText: false, cellNF: false, sheets: ['BOARD', '거래내역', '월말일현황', '배당', '자녀증여', 'PLAN', 'SIM', '2031-40추계'] });
+    var wb = X.read(buf, { type: 'array', cellFormula: true, cellDates: false, cellStyles: false, cellHTML: false, cellText: false, cellNF: false, sheets: ['BOARD', '목표비중', '거래내역', '월말일현황', '배당', '자녀증여', 'PLAN', 'SIM', '2031-40추계'] });
     var need = ['BOARD', '거래내역', '월말일현황', '배당', '자녀증여', 'PLAN', 'SIM'];
     var miss = need.filter(function (n) { return !wb.Sheets[n]; });
     if (miss.length) throw new Error('시트가 없습니다: ' + miss.join(', '));
@@ -711,6 +774,15 @@ var XIMP = (function () {
       goal: num('월말일현황', 'Y2') || ps.goal || 1000000000, tickers: tickers,
       addBuy: ps.addBuy || {}, limits: { pension: pension, isa: isa }, taxSell: ps.taxSell || {}
     };
+    /* --- 목표비중 (입력칸만 읽고 계산은 앱에서) --- */
+    if (wb.Sheets['목표비중']) {
+      var TG = '목표비중', tn = function (a, d) { var x = num(TG, a); return x == null ? d : x; };
+      settings.target = {
+        buy: tn('B1', 10000000), cashInc: tn('E1', 0), months: tn('A3', 6),
+        alloc: { SPCX: tn('B4', 0), NSD100: tn('C4', 0), 'S&P500': tn('D4', 0), SCHD: tn('E4', 0), GOLD: tn('F4', 0) },
+        rise: { SPCX: tn('C12', 0), NSD100: tn('D12', 0), 'S&P500': tn('E12', 0), SCHD: tn('F12', 0), GOLD: tn('G12', 0), CASH: tn('H12', 0) }
+      };
+    } else if (ps.target) settings.target = ps.target;
 
     /* --- 거래내역 --- */
     var trades = [], last = lastRow('거래내역');
@@ -1047,13 +1119,14 @@ function ctx() {
 var TABS = [
   { id: 'board', label: 'BOARD', icon: '<path d="M4 13h4v7H4zM10 4h4v16h-4zM16 9h4v11h-4z"/>' },
   { id: 'buys', label: '월별매수', icon: '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M8 14h3M8 17h6"/>' },
+  { id: 'target', label: '목표비중', icon: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="0.9" fill="currentColor"/>' },
   { id: 'trades', label: '거래내역', icon: '<path d="M4 6h16M4 12h16M4 18h10"/>' },
   { id: 'monthly', label: '월말현황', icon: '<path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/>' },
   { id: 'dividend', label: '배당', icon: '<circle cx="12" cy="12" r="8"/><path d="M12 7v10M9.5 9.5c0-1 1.1-1.7 2.5-1.7s2.5.7 2.5 1.7-1.1 1.6-2.5 1.8-2.5.8-2.5 1.9 1.1 1.8 2.5 1.8 2.5-.7 2.5-1.7"/>' },
   { id: 'more', label: '더보기', icon: '<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>' }
 ];
 var SUB = { kids: '자녀증여', plan: 'PLAN', sim: 'SIM', setup: '설정·백업' };
-function route() { var h = (location.hash || '').slice(1); return ['board', 'buys', 'trades', 'monthly', 'dividend', 'more', 'kids', 'plan', 'sim', 'setup'].indexOf(h) >= 0 ? h : 'board'; }
+function route() { var h = (location.hash || '').slice(1); return ['board', 'buys', 'target', 'trades', 'monthly', 'dividend', 'more', 'kids', 'plan', 'sim', 'setup'].indexOf(h) >= 0 ? h : 'board'; }
 function renderTabs() {
   var r = route(), act = SUB[r] ? 'more' : r;
   $('#tabs').innerHTML = TABS.map(function (t) {
@@ -1061,8 +1134,8 @@ function renderTabs() {
   }).join('');
 }
 var VC = {}, DV = 0, UIV = 0, BULK = false;
-var VIEWS = { board: vBoard, buys: vBuys, trades: vTrades, monthly: vMonthly, dividend: vDividend, more: vMore, kids: vKids, plan: vPlan, sim: vSim, setup: vSetup };
-var TITLES = { board: '투자일지', buys: '월별 매수 내역', trades: '거래내역', monthly: '월말현황', dividend: '배당', more: '더보기' };
+var VIEWS = { board: vBoard, buys: vBuys, target: vTarget, trades: vTrades, monthly: vMonthly, dividend: vDividend, more: vMore, kids: vKids, plan: vPlan, sim: vSim, setup: vSetup };
+var TITLES = { board: '투자일지', buys: '월별 매수 내역', target: '목표비중', trades: '거래내역', monthly: '월말현황', dividend: '배당', more: '더보기' };
 function bump() { DV++; }
 function rerender() { UIV++; render(); }
 function renderHeader() {
@@ -1112,7 +1185,7 @@ function render() {
 function idlePrebuild() {
   clearTimeout(idlePrebuild.t);
   var run = function () {
-    var todo = ['board', 'buys', 'trades', 'monthly', 'dividend', 'more'].filter(function (r) { return !VC[r] || VC[r].key !== vkey(r); });
+    var todo = ['board', 'buys', 'target', 'trades', 'monthly', 'dividend', 'more'].filter(function (r) { return !VC[r] || VC[r].key !== vkey(r); });
     if (!todo.length || !ready()) return;
     buildView(todo[0]); idlePrebuild();
   };
@@ -1459,6 +1532,127 @@ function vMore() {
   var items = [['kids', '자녀증여', '두 아이 증여계좌 현황·입금·매수'], ['plan', 'PLAN', '자산 및 은퇴 계획, 2031~2040 추계'], ['sim', 'SIM', '가격·환율을 바꿔 보는 시뮬레이션'], ['setup', '설정·백업', '종목·현금·한도 설정, 엑셀·백업 내보내기']];
   return '<div class="list morelist" style="margin-top:6px">' + items.map(function (i) { return '<button type="button" class="li" data-go="' + i[0] + '"><div class="mid"><div class="t">' + i[1] + '</div><div class="s">' + i[2] + '</div></div><div class="r muted">›</div></button>'; }).join('') + '</div>';
 }
+
+/* ---------- 목표비중 (시뮬레이션 + 엑셀 저장) ---------- */
+var TG_ALLOC = ['SPCX', 'NSD100', 'S&P500', 'SCHD', 'GOLD'];
+var TG_RISE = ['SPCX', 'NSD100', 'S&P500', 'SCHD', 'GOLD', 'CASH'];
+function tgDefault() { return { buy: 10000000, cashInc: 0, months: 6, alloc: { SPCX: 0, NSD100: 0, 'S&P500': 0, SCHD: 0, GOLD: 0 }, rise: { SPCX: 0, NSD100: 0, 'S&P500': 0, SCHD: 0, GOLD: 0, CASH: 0 } }; }
+function r6(x) { return Math.round((+x || 0) * 1e6) / 1e6; }
+function tgNorm(t) {
+  var d = tgDefault(), o = { buy: Math.round(+t.buy || 0), cashInc: Math.round(+t.cashInc || 0), months: Math.max(1, Math.round(+t.months || 1)), alloc: {}, rise: {} };
+  TG_ALLOC.forEach(function (k) { o.alloc[k] = r6((t.alloc || d.alloc)[k]); });
+  TG_RISE.forEach(function (k) { o.rise[k] = r6((t.rise || d.rise)[k]); });
+  return o;
+}
+function tgBase() { return tgNorm(S.settings.target || tgDefault()); }
+function tgDraft() {
+  var b = tgBase(), bj = JSON.stringify(b);
+  if (!UI.tg || UI.tgFromJ !== bj) { UI.tg = clone(b); UI.tgFromJ = bj; }
+  return UI.tg;
+}
+function tgDirty() { return UI.tg && JSON.stringify(tgNorm(UI.tg)) !== UI.tgFromJ; }
+function tgGet(f) {
+  var t = tgDraft();
+  if (f === 'buy' || f === 'cashInc') return t[f] / 1e4;
+  if (f === 'months') return t.months;
+  var p = f.split('.'); return Math.round(t[p[0]][p[1]] * 10000) / 100;
+}
+function tgSet(f, v) {
+  var t = tgDraft(); v = +v; if (!isFinite(v)) return;
+  if (f === 'buy' || f === 'cashInc') t[f] = Math.max(0, Math.round(v * 1e4));
+  else if (f === 'months') t.months = Math.min(120, Math.max(1, Math.round(v)));
+  else { var p = f.split('.'); t[p[0]][p[1]] = (p[0] === 'alloc' ? Math.min(100, Math.max(0, v)) : Math.max(-100, v)) / 100; }
+}
+function tgFmt(f) { var v = tgGet(f); return f === 'buy' || f === 'cashInc' ? int(v) : String(v); }
+function stepper(f, unit, step, label) {
+  return '<div class="stp"><button type="button" class="sb" data-act="tgStep" data-f="' + f + '" data-d="' + (-step) + '" aria-label="' + esc(label) + ' 줄이기">−</button>' +
+    '<input type="text" inputmode="decimal" autocomplete="off" data-tg="' + f + '" value="' + tgFmt(f) + '" aria-label="' + esc(label) + '"><span class="u">' + unit + '</span>' +
+    '<button type="button" class="sb" data-act="tgStep" data-f="' + f + '" data-d="' + step + '" aria-label="' + esc(label) + ' 늘리기">+</button></div>';
+}
+function tgCalc() { return ENG.target(ctx().B.groups, tgNorm(tgDraft())); }
+function tgHeroHTML(R, m) {
+  var T = R.total, bars = [['지금', 'wCur', T.cur], [m + '개월 후', 'wAfter', T.after], ['상승 반영', 'wFin', T.fin]];
+  return '<div class="lab">' + m + '개월 뒤 예상 자산</div><div class="big xl">' + eokHTML(T.fin) + '</div>' +
+    '<div class="exact"><span>지금보다</span><span class="gainchip' + (T.fin - T.cur < 0 ? ' neg' : '') + '">' + (T.fin >= T.cur ? '▲ ' : '▼ ') + man(Math.abs(T.fin - T.cur), 0) + '</span><span class="muted small">매수 ' + man(T.add, 0) + ' + 상승 ' + man(T.fin - T.after, 0) + '</span></div>' +
+    '<div class="tgbars">' + bars.map(function (b) {
+      return '<div class="tgb"><div class="tgbl"><span>' + b[0] + '</span><b>' + eok(b[2]) + '</b></div>' + allocBar(R.rows.map(function (r) { return { g: r.g, w: r[b[1]] }; })) + '</div>';
+    }).join('') + '</div>' +
+    '<div class="legend tglegend">' + R.rows.map(function (r) { return '<div>' + dot(r.g) + GROUP_NAME[r.g] + '</div>'; }).join('') + '</div>';
+}
+function tgOutHTML(R, m) {
+  var cell = function (w, a) { return '<td><b>' + pct(w, 1) + '</b><small>' + man(a, 0) + '</small></td>'; };
+  return '<table class="tgt"><colgroup><col style="width:28%"><col><col><col></colgroup><thead><tr><th>자산</th><th>지금</th><th>' + m + '개월 후</th><th>상승 반영</th></tr></thead><tbody>' +
+    R.rows.map(function (r) {
+      var dw = r.wFin - r.wCur;
+      return '<tr><td><span class="nm">' + dot(r.g) + GROUP_NAME[r.g] + '</span><small class="' + (dw > 0.0005 ? 'up' : dw < -0.0005 ? 'down' : 'muted') + '">' + (dw > 0.0005 ? '▲' : dw < -0.0005 ? '▼' : '') + dec(Math.abs(dw) * 100, 1) + 'p</small></td>' + cell(r.wCur, r.cur) + cell(r.wAfter, r.after) + cell(r.wFin, r.fin) + '</tr>';
+    }).join('') +
+    '<tr class="tot"><td>합계</td><td><b>' + eok(R.total.cur).replace('원', '') + '</b></td><td><b>' + eok(R.total.after).replace('원', '') + '</b></td><td><b>' + eok(R.total.fin).replace('원', '') + '</b></td></tr></tbody></table>';
+}
+function tgBarHTML() {
+  var dirty = tgDirty(), can = !!window.__xlsxWrite;
+  if (!dirty) return '<span class="ok">✓ 엑셀 「목표비중」 시트와 같은 값입니다</span>';
+  return '<span class="dif">엑셀과 다른 값</span><button class="btn sm ghost" type="button" data-act="tgReset">되돌리기</button>' +
+    (can ? '<button class="btn sm pri" type="button" data-act="tgSave" id="tgSaveBtn">엑셀에 저장</button>' : '<span class="muted small">저장은 홈 화면 앱에서</span>');
+}
+function tgUpdate() {
+  var box = VC.target && VC.target.el; if (!box) return;
+  var t = tgNorm(tgDraft()), R = ENG.target(ctx().B.groups, t), m = t.months;
+  var q = function (s) { return box.querySelector(s); };
+  q('#tgHero').innerHTML = tgHeroHTML(R, m);
+  q('#tgOut').innerHTML = tgOutHTML(R, m);
+  q('#tgBar').innerHTML = tgBarHTML();
+  q('#tgBar').classList.toggle('dirty', !!tgDirty());
+  var s = q('#tgSum'); s.textContent = '합계 ' + dec(R.allocSum * 100, 0) + '%'; s.className = 'pill ' + (Math.abs(R.allocSum - 1) < 0.0005 ? 'okp' : 'warnp');
+  TG_ALLOC.forEach(function (k) { var el = q('[data-tgm="' + k + '"]'); if (el) el.textContent = man(t.buy * t.alloc[k], 0); });
+  box.querySelectorAll('[data-tgmon]').forEach(function (el) { el.textContent = m; });
+  q('#tgCashAdd').textContent = man(t.cashInc * m, 0);
+}
+function vTarget(C) {
+  var t = tgNorm(tgDraft()), R = ENG.target(C.B.groups, t), m = t.months;
+  var h = '<div class="stack tgview" style="margin-top:6px">';
+  h += '<section class="card hero" id="tgHero">' + tgHeroHTML(R, m) + '</section>';
+  h += '<section class="card"><div class="tgh"><b>매수 조건</b></div>' +
+    '<div class="tgrow"><div class="tgl">월 매수액</div>' + stepper('buy', '만원', 10, '월 매수액') + '</div>' +
+    '<div class="tgrow"><div class="tgl">월 현금 증가<small>현금+파킹에 더해짐 · <span id="tgCashAdd">' + man(t.cashInc * m, 0) + '</span></small></div>' + stepper('cashInc', '만원', 10, '월 현금 증가') + '</div>' +
+    '<div class="tgrow"><div class="tgl">기간</div>' + stepper('months', '개월', 1, '기간') + '</div></section>';
+  h += '<section class="card"><div class="tgh"><b>월 매수 배분</b><span id="tgSum" class="pill ' + (Math.abs(R.allocSum - 1) < 0.0005 ? 'okp' : 'warnp') + '">합계 ' + dec(R.allocSum * 100, 0) + '%</span></div>' +
+    TG_ALLOC.map(function (k) { return '<div class="tgrow"><div class="tgl">' + dot(k) + GROUP_NAME[k] + '<small data-tgm="' + k + '">' + man(t.buy * t.alloc[k], 0) + '</small></div>' + stepper('alloc.' + k, '%', 1, GROUP_NAME[k] + ' 배분') + '</div>'; }).join('') + '</section>';
+  h += '<section class="card"><div class="tgh"><b><span data-tgmon>' + m + '</span>개월 상승률</b><span class="muted small">가정</span></div>' +
+    TG_RISE.map(function (k) { return '<div class="tgrow"><div class="tgl">' + dot(k) + GROUP_NAME[k] + '</div>' + stepper('rise.' + k, '%', k === 'CASH' ? 0.5 : 1, GROUP_NAME[k] + ' 상승률') + '</div>'; }).join('') + '</section>';
+  h += '<section class="card tgout-card"><div class="tgh"><b>자산별 비중 변화</b><span class="muted small">▲▼ 지금 대비 최종 비중</span></div><div id="tgOut">' + tgOutHTML(R, m) + '</div></section>';
+  h += '<p class="note">지금 금액은 BOARD와 같은 값(엑셀 BOARD 기준)입니다. 계산식은 엑셀 「목표비중」 시트와 같습니다. 숫자를 바꾸면 바로 다시 계산되고, 「엑셀에 저장」을 누르면 엑셀 파일의 입력칸(월매수·월현금증가·기간·배분·상승률)에 그대로 들어갑니다. 저장할 때는 컴퓨터에서 엑셀 파일을 닫아 두세요.</p>';
+  h += '<div class="tgbar' + (tgDirty() ? ' dirty' : '') + '" id="tgBar">' + tgBarHTML() + '</div>';
+  return h + '</div>';
+}
+function tgSave() {
+  var st = S.settings, w = window.__xlsxWrite;
+  if (!w) return;
+  if (!st.driveFileId) { toast('엑셀 파일 정보가 없습니다. 새로고침 후 다시 저장해 주세요.'); return; }
+  var t = tgNorm(tgDraft());
+  if (Math.abs(ENG.target([], t).allocSum - 1) > 0.0005 && !UI.tgWarned) { UI.tgWarned = true; toast('배분 합계가 100%가 아닙니다. 그래도 저장하려면 한 번 더 누르세요.'); return; }
+  UI.tgWarned = false;
+  var cells = { B1: t.buy, E1: t.cashInc, A3: t.months, B4: t.alloc.SPCX, C4: t.alloc.NSD100, D4: t.alloc['S&P500'], E4: t.alloc.SCHD, F4: t.alloc.GOLD,
+    C12: t.rise.SPCX, D12: t.rise.NSD100, E12: t.rise['S&P500'], F12: t.rise.SCHD, G12: t.rise.GOLD, H12: t.rise.CASH };
+  var b = document.getElementById('tgSaveBtn'); if (b) { b.disabled = true; b.textContent = '저장 중…'; }
+  w(st.driveFileId, '목표비중', cells).then(function (j) {
+    var o = clone(S.settings); o.target = t; if (j && j.modified) o.driveModified = null;
+    UI.tgFromJ = JSON.stringify(t); S.settings = o; saveApp('settings'); tgUpdate();
+    toast('엑셀 「목표비중」 시트에 저장했습니다.');
+    setTimeout(function () { driveSync(true); }, 2500);
+  }).catch(function (e) {
+    toast((e && e.message) || '저장하지 못했습니다.');
+    var b2 = document.getElementById('tgSaveBtn'); if (b2) { b2.disabled = false; b2.textContent = '엑셀에 저장'; }
+  });
+}
+document.addEventListener('input', function (e) {
+  var el = e.target; if (!el.dataset || !el.dataset.tg) return;
+  var v = parseFloat(String(el.value).replace(/,/g, ''));
+  if (!isFinite(v)) return;
+  tgSet(el.dataset.tg, v); tgUpdate();
+});
+document.addEventListener('focusout', function (e) {
+  var el = e.target; if (el.dataset && el.dataset.tg) el.value = tgFmt(el.dataset.tg);
+});
 
 /* ---------- 자녀증여 ---------- */
 function kidPrice(t) { var m = (S.kids.priceMap || {})[t]; var x = m && tk(m); return x ? n(x.price) : 0; }
@@ -1853,6 +2047,9 @@ document.addEventListener('click', function (e) {
     case 'exportXlsx': exportXlsx(); break;
     case 'editMode': localSet('edit', a.dataset.v); rerender(); break;
     case 'syncNow': driveSync(true); break;
+    case 'tgStep': (function () { var f = a.dataset.f; tgSet(f, tgGet(f) + (+a.dataset.d)); var inp = a.parentNode.querySelector('input'); if (inp) inp.value = tgFmt(f); tgUpdate(); })(); break;
+    case 'tgReset': UI.tg = null; tgDraft(); UIV++; render(); break;
+    case 'tgSave': tgSave(); break;
     case 'theme': localSet('theme', a.dataset.v); applyTheme(); rerender(); break;
   }
 });

@@ -1,7 +1,7 @@
 /* ===== 엑셀(투자일지 .xlsx) → 프로그램 데이터 변환 ===== */
 var XIMP = (function () {
   function parse(X, buf, prev) {
-    var wb = X.read(buf, { type: 'array', cellFormula: true, cellDates: false, cellStyles: false, cellHTML: false, cellText: false, cellNF: false, sheets: ['BOARD', '거래내역', '월말일현황', '배당', '자녀증여', 'PLAN', 'SIM', '2031-40추계'] });
+    var wb = X.read(buf, { type: 'array', cellFormula: true, cellDates: false, cellStyles: false, cellHTML: false, cellText: false, cellNF: false, sheets: ['BOARD', '목표비중', '거래내역', '월말일현황', '배당', '자녀증여', 'PLAN', 'SIM', '2031-40추계'] });
     var need = ['BOARD', '거래내역', '월말일현황', '배당', '자녀증여', 'PLAN', 'SIM'];
     var miss = need.filter(function (n) { return !wb.Sheets[n]; });
     if (miss.length) throw new Error('시트가 없습니다: ' + miss.join(', '));
@@ -56,6 +56,15 @@ var XIMP = (function () {
       goal: num('월말일현황', 'Y2') || ps.goal || 1000000000, tickers: tickers,
       addBuy: ps.addBuy || {}, limits: { pension: pension, isa: isa }, taxSell: ps.taxSell || {}
     };
+    /* --- 목표비중 (입력칸만 읽고 계산은 앱에서) --- */
+    if (wb.Sheets['목표비중']) {
+      var TG = '목표비중', tn = function (a, d) { var x = num(TG, a); return x == null ? d : x; };
+      settings.target = {
+        buy: tn('B1', 10000000), cashInc: tn('E1', 0), months: tn('A3', 6),
+        alloc: { SPCX: tn('B4', 0), NSD100: tn('C4', 0), 'S&P500': tn('D4', 0), SCHD: tn('E4', 0), GOLD: tn('F4', 0) },
+        rise: { SPCX: tn('C12', 0), NSD100: tn('D12', 0), 'S&P500': tn('E12', 0), SCHD: tn('F12', 0), GOLD: tn('G12', 0), CASH: tn('H12', 0) }
+      };
+    } else if (ps.target) settings.target = ps.target;
 
     /* --- 거래내역 --- */
     var trades = [], last = lastRow('거래내역');
