@@ -346,6 +346,22 @@ td { border-bottom-color: var(--line); }
 .htbl .hdet .kv { font-size: 13px; gap: 6px 14px; }
 .htbl .hdet-btns { display: flex; gap: 8px; margin-top: 12px; }
 .piesvg text { font-family: inherit; }
+
+/* 박스형 비중 그래프 */
+.tmwrap { position: relative; margin: -4px -6px 6px; }
+.tmap { position: relative; width: 100%; aspect-ratio: 100 / 58; }
+.tmwrap.hascall { padding-bottom: 12%; }
+.tmb { position: absolute; box-sizing: border-box; padding: 1.5px; cursor: pointer; }
+.tmb .tmi { width: 100%; height: 100%; box-sizing: border-box; border-radius: 9px; background: linear-gradient(150deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.18)), var(--c); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2px; overflow: hidden; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); transition: filter .15s; }
+.tmb:active .tmi { filter: brightness(1.12); }
+.tmb .tmi b { font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; white-space: nowrap; }
+.tmb .tmi span { font-weight: 600; opacity: 0.92; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tmb.dk .tmi { color: #1d1606; text-shadow: none; }
+.tmlines { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.tmcall { position: absolute; bottom: 2px; display: flex; align-items: center; justify-content: center; gap: 4px; height: 22px; font-size: 11.5px; font-weight: 600; color: var(--text); white-space: nowrap; border-radius: 7px; background: rgba(127, 127, 127, 0.12); cursor: pointer; }
+.tmdot { position: absolute; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; border: 1.5px solid #fff; box-sizing: content-box; pointer-events: none; }
+.tmcall i { width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.tmcall b { font-weight: 700; font-variant-numeric: tabular-nums; }
 #pwaSetup { position: fixed; inset: 0; z-index: 80; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
 #pwaSetup .setup-in { width: 100%; max-width: 420px; display: grid; gap: 12px; }
 #pwaSetup h2 { margin: 0; font-size: 22px; }
@@ -1236,7 +1252,7 @@ function vBoard(C) {
     goalBlock(B.total, st.goal, M) + '</section>';
   h += '<div class="pricebar"><span class="muted">' + esc(st.priceAt || '') + ' 시세 기준</span><button class="btn sm" data-act="prices" type="button">시세·환율 입력</button></div>';
   // 비중
-  h += '<section class="card">' + pieChart(byAmt(B.groups)) + '<div class="legend">' +
+  h += '<section class="card">' + treemap(byAmt(B.groups)) + '<div class="legend">' +
     byAmt(B.groups).map(function (g) { return '<div data-act="detail" data-k="group" data-g="' + esc(g.g) + '">' + dot(g.g) + GROUP_NAME[g.g] + '<span class="r">' + pct(g.w, 1) + ' <span class="muted small">' + int(Math.round(g.amt / 1e4 / 10) * 10) + '만</span></span></div>'; }).join('') + '</div></section>';
   // 타일
   h += '<div class="tiles">' +
@@ -1274,6 +1290,55 @@ var GROUP_HEX = { SPCX: '#a78bfa', NSD100: '#2dd4bf', 'S&P500': '#60a5fa', SCHD:
 function allocBar(groups) {
   var x = 0, segs = groups.map(function (g) { var w = g.w * 100, r = '<rect x="' + x.toFixed(3) + '" y="0" width="' + Math.max(0, w - 0.4).toFixed(3) + '" height="14" fill="' + GROUP_HEX[g.g] + '"/>'; x += w; return r; }).join('');
   return '<svg class="allocsvg" viewBox="0 0 100 14" preserveAspectRatio="none" width="100%" height="14" role="img" aria-label="자산군 비중" style="display:block;border-radius:7px;overflow:hidden"><defs><clipPath id="ac"><rect width="100" height="14" rx="3.5"/></clipPath></defs><g clip-path="url(#ac)">' + segs + '</g></svg>';
+}
+/* 박스형(트리맵) 비중 그래프 — 미국증시 현황판 방식. 작은 칸은 선을 빼서 아래에 이름·% 표시 */
+var TM_COLOR = { SCHD: '#d64a5a', NSD100: '#0f9b88', 'S&P500': '#3a6be0', CASH: '#5a6577', SPCX: '#7c55cf', GOLD: '#c9981a' };
+function squarify(vals, x, y, w, h) {
+  var out = [], items = vals.map(function (v, i) { return { i: i, a: v }; });
+  var worst = function (row, side) {
+    var s = 0, mx = 0, mn = Infinity; row.forEach(function (r) { s += r.a; mx = Math.max(mx, r.a); mn = Math.min(mn, r.a); });
+    return Math.max(side * side * mx / (s * s), (s * s) / (side * side * mn));
+  };
+  while (items.length) {
+    var side = Math.min(w, h), row = [items[0]], k = 1;
+    while (k < items.length && worst(row.concat([items[k]]), side) <= worst(row, side)) { row.push(items[k]); k++; }
+    items = items.slice(k);
+    var s = row.reduce(function (t, r) { return t + r.a; }, 0);
+    if (w >= h) { var cw = s / h, cy = y; row.forEach(function (r) { var rh = r.a / cw; out[r.i] = { x: x, y: cy, w: cw, h: rh }; cy += rh; }); x += cw; w -= cw; }
+    else { var ch = s / w, cx = x; row.forEach(function (r) { var rw = r.a / ch; out[r.i] = { x: cx, y: y, w: rw, h: ch }; cx += rw; }); y += ch; h -= ch; }
+  }
+  return out;
+}
+function treemap(groups) {
+  groups = groups.filter(function (g) { return g.w > 0.0005; });
+  var W = 100, H = 58, PX = 3.3; // 화면 폭 약 330px 기준으로 글자 들어갈지 판단
+  var R = squarify(groups.map(function (g) { return g.w * W * H; }), 0, 0, W, H), small = [];
+  var boxes = groups.map(function (g, i) {
+    var r = R[i], pw = r.w * PX, ph = r.h * PX, name = GROUP_NAME[g.g], p = pct(g.w, 1);
+    var big = pw * ph > 9000, nfs = big ? 16 : 13, pfs = big ? 13.5 : 11.5;
+    var needW = Math.max(name.length * nfs * 0.62, p.length * pfs * 0.6) + 14, inner;
+    if (pw >= needW && ph >= nfs + pfs + 14) inner = '<b style="font-size:' + nfs + 'px">' + esc(name) + '</b><span style="font-size:' + pfs + 'px">' + p + '</span>';
+    else if (pw >= (name.length + p.length + 1) * 6.4 + 12 && ph >= 20) inner = '<b style="font-size:11.5px">' + esc(name) + ' <span style="font-size:11px">' + p + '</span></b>';
+    else { inner = ''; small.push({ g: g, r: r, cx: r.x + r.w / 2, by: r.y + r.h / 2 }); }
+    return '<div class="tmb' + (g.g === 'GOLD' ? ' dk' : '') + '" data-act="detail" data-k="group" data-g="' + esc(g.g) + '" style="left:' + r.x + '%;top:' + (r.y / H * 100) + '%;width:' + r.w + '%;height:' + (r.h / H * 100) + '%;--c:' + TM_COLOR[g.g] + '"><div class="tmi">' + inner + '</div></div>';
+  }).join('');
+  var call = '';
+  if (small.length) {
+    small.sort(function (a, b) { return b.cx - a.cx || a.r.w - b.r.w; });
+    small.forEach(function (sm, k) { var f = small.length > 1 ? 0.72 - 0.44 * k / (small.length - 1) : 0.5; sm.cx = sm.r.x + sm.r.w * f; });
+    var right = 100, labs = small.map(function (s) {
+      var txt = GROUP_NAME[s.g.g] + ' ' + pct(s.g.w, 1), wPct = (txt.length * 6.6 + 22) / PX;
+      var lx = Math.min(right - wPct, s.cx - wPct / 2); lx = Math.max(0, lx); right = lx - 2;
+      return { s: s, txt: txt, lx: lx, wPct: wPct };
+    });
+    var lines = labs.map(function (l) {
+      var ax = l.lx + l.wPct / 2;
+      return '<polyline points="' + l.s.cx.toFixed(2) + ',' + l.s.by.toFixed(2) + ' ' + l.s.cx.toFixed(2) + ',' + (H + 3.2).toFixed(2) + ' ' + ax.toFixed(2) + ',' + (H + 3.2).toFixed(2) + ' ' + ax.toFixed(2) + ',' + (H + 4.6).toFixed(2) + '" fill="none" stroke="' + GROUP_HEX[l.s.g.g] + '" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>';
+    }).join('');
+    call = '<svg class="tmlines" viewBox="0 0 100 ' + (H + 12) + '" preserveAspectRatio="none" aria-hidden="true">' + lines + '</svg>' + labs.map(function (l) { return '<i class="tmdot" style="left:' + l.s.cx + '%;top:' + (l.s.by / (H + 12) * 100) + '%;background:' + GROUP_HEX[l.s.g.g] + '"></i>'; }).join('') +
+      labs.map(function (l) { return '<span class="tmcall" data-act="detail" data-k="group" data-g="' + esc(l.s.g.g) + '" style="left:' + l.lx + '%;width:' + l.wPct + '%"><i style="background:' + TM_COLOR[l.s.g.g] + '"></i>' + esc(GROUP_NAME[l.s.g.g]) + ' <b>' + pct(l.s.g.w, 1) + '</b></span>'; }).join('');
+  }
+  return '<div class="tmwrap' + (small.length ? ' hascall' : '') + '" role="img" aria-label="자산군 비중">' + '<div class="tmap">' + boxes + '</div>' + call + '</div>';
 }
 /* 원형 비중 그래프: 큰 조각은 안쪽에 이름, 작은 조각은 선을 빼서 바깥에 이름 */
 function pieChart(groups) {
