@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>투자일지</title>
+<title>김도연 투자일지</title>
 <meta name="theme-color" content="#0f4c5c">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="투자일지">
+<meta name="apple-mobile-web-app-title" content="김도연 투자일지">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -352,8 +352,9 @@ td { border-bottom-color: var(--line); }
 .tmap { position: relative; width: 100%; aspect-ratio: 100 / 58; }
 .tmwrap.hascall { padding-bottom: 12%; }
 .tmb { position: absolute; box-sizing: border-box; padding: 1.5px; cursor: pointer; }
-.tmb .tmi { width: 100%; height: 100%; box-sizing: border-box; border-radius: 9px; background: linear-gradient(150deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.18)), var(--c); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2px; overflow: hidden; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); transition: filter .15s; }
-.tmb:active .tmi { filter: brightness(1.12); }
+.tmsvg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+.tmb .tmi { width: 100%; height: 100%; box-sizing: border-box; border-radius: 9px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2px; overflow: hidden; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28); }
+.tmb:active .tmi { background: rgba(255, 255, 255, 0.12); }
 .tmb .tmi b { font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; white-space: nowrap; }
 .tmb .tmi span { font-weight: 600; opacity: 0.92; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .tmb.dk .tmi { color: #1d1606; text-shadow: none; }
@@ -362,6 +363,25 @@ td { border-bottom-color: var(--line); }
 .tmdot { position: absolute; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; border: 1.5px solid #fff; box-sizing: content-box; pointer-events: none; }
 .tmcall i { width: 8px; height: 8px; border-radius: 2px; flex: none; }
 .tmcall b { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* 좌우 여백 줄이고 칸마다 외곽선 또렷하게 */
+:root { --box: rgba(150, 168, 205, 0.26); }
+:root[data-theme="light"] { --box: rgba(15, 23, 42, 0.16); }
+.wrap { padding-left: 8px; padding-right: 8px; }
+.stack { gap: 10px; }
+.card { padding: 14px 12px; border: 1px solid var(--box) !important; }
+.tile { padding: 12px 12px 11px; border: 1px solid var(--box) !important; }
+.tiles { gap: 8px; }
+.list { border: 1px solid var(--box) !important; }
+.tbl-wrap { margin: 0 -12px; padding: 0 12px; }
+.mtbl-card { padding: 2px 8px 4px; }
+.tmwrap { margin: -4px -4px 6px; }
+.legend { gap: 0 16px; margin-top: 10px; }
+.legend > div { padding: 9px 2px; border-bottom: 1px solid var(--line); border-radius: 0; }
+.legend > div:last-child, .legend > div:nth-last-child(2):nth-child(odd) { border-bottom: 0; }
+.sec-t { padding-left: 4px; padding-right: 4px; }
+.pricebar { padding-left: 4px; padding-right: 4px; }
+.htbl td .hn b { white-space: nowrap; }
 #pwaSetup { position: fixed; inset: 0; z-index: 80; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
 #pwaSetup .setup-in { width: 100%; max-width: 420px; display: grid; gap: 12px; }
 #pwaSetup h2 { margin: 0; font-size: 22px; }
@@ -369,7 +389,7 @@ td { border-bottom-color: var(--line); }
 </head>
 <body>
 <header class="top"><div class="in">
-  <div><h1 id="ttl">투자일지</h1><div class="sub" id="subttl">불러오는 중</div></div>
+  <div><h1 id="ttl">김도연 투자일지</h1><div class="sub" id="subttl">불러오는 중</div></div>
   <div class="sp"></div>
   <button class="btn sm" data-act="prices" id="btnPrices" type="button">시세 입력</button>
   <button class="btn sm hide" id="btnXls" type="button" data-act="syncNow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.9M4 4v4h4M4 13a8 8 0 0 0 14.9 3.9M20 20v-4h-4"/></svg><span id="btnXlsTxt">새로고침</span></button>
@@ -935,7 +955,7 @@ var S = { settings: null, sim: null, plan: null, monthend: null, dividend: null,
 var UI = { tf: 'all', months: 3, openMonths: {}, openHold: {}, simDirty: null };
 var DB = null, DL = null, pendingRender = false, gotApp = false, gotLedger = false;
 var APP_DOCS = ['settings', 'sim', 'plan', 'monthend', 'dividend', 'kids'];
-var GROUP_NAME = { SPCX: 'SPCX', NSD100: '나스닥100', 'S&P500': 'S&P500', SCHD: 'SCHD', GOLD: '금', CASH: '현금+파킹' };
+var GROUP_NAME = { SPCX: 'SPCX', NSD100: '나스닥100', 'S&P500': 'S&P500', SCHD: 'SCHD', GOLD: '금', CASH: '현금+채권' };
 var GROUP_VAR = { SPCX: 'SPCX', NSD100: 'NSD100', 'S&P500': 'SP500', SCHD: 'SCHD', GOLD: 'GOLD', CASH: 'CASH' };
 var EDIT_ACTS = ['prices', 'addTrade', 'editTrade', 'closeMonth', 'editMonth', 'addMilestone', 'addDiv', 'editDiv', 'addKidDep', 'addKidBuy', 'editKidDep', 'editKidBuy', 'addTicker', 'delTicker'];
 var DIV_TICKERS = ['SCHD', 'QQQM', 'SPYM', 'BIL', '타이거S&P500', '타이거나스닥100', 'KODEX미국30년국채액티브(H)'];
@@ -1172,7 +1192,7 @@ function renderTabs() {
 }
 var VC = {}, DV = 0, UIV = 0, BULK = false;
 var VIEWS = { board: vBoard, buys: vBuys, target: vTarget, trades: vTrades, monthly: vMonthly, dividend: vDividend, more: vMore, kids: vKids, plan: vPlan, sim: vSim, setup: vSetup };
-var TITLES = { board: '투자일지', buys: '월별 매수 내역', target: '목표비중', trades: '거래내역', monthly: '월말현황', dividend: '배당', more: '더보기' };
+var TITLES = { board: '김도연 투자일지', buys: '월별 매수 내역', target: '목표비중', trades: '거래내역', monthly: '월말현황', dividend: '배당', more: '더보기' };
 function bump() { DV++; }
 function rerender() { UIV++; render(); }
 function renderHeader() {
@@ -1265,10 +1285,10 @@ function vBoard(C) {
     tile('투자기간', MB.months + '개월', '월평균 매수 ' + dec(MB.avg / 1e4, 1) + '만', 'period') +
     tile('현금계', won(B.cash), '정기예금 ' + man(B.deposit) + ' · 예수금 ' + man(B.cashBal), 'cash') +
     '</div>';
-  h += '<section class="card tapcard" data-act="detail" data-k="cash"><div class="hd" style="display:flex;align-items:center;gap:8px;padding-right:18px"><b>파킹 (미단기채 BIL)</b><span class="pill gray">매수환율 ' + dec(st.bilFx, 2) + '</span><span class="sp" style="flex:1"></span><b class="tnum">' + won(B.bilKrw) + '</b></div><div class="small muted tnum" style="margin-top:4px">' + usd(st.bilUsd) + ' · 환차 <span class="' + cls((B.fx - st.bilFx) * st.bilUsd) + '">' + wonS((B.fx - st.bilFx) * st.bilUsd) + '</span></div></section>';
+  h += '<section class="card tapcard" data-act="detail" data-k="cash"><div class="hd" style="display:flex;align-items:center;gap:8px;padding-right:18px"><b style="white-space:nowrap">채권 (미단기채 BIL)</b><span class="sp" style="flex:1"></span><b class="tnum" style="white-space:nowrap">' + won(B.bilKrw) + '</b></div><div class="small muted tnum" style="margin-top:6px;display:flex;flex-wrap:wrap;align-items:center;gap:6px">' + usd(st.bilUsd) + ' · 환차 <span class="' + cls((B.fx - st.bilFx) * st.bilUsd) + '">' + wonS((B.fx - st.bilFx) * st.bilUsd) + '</span><span class="pill gray">매수환율 ' + dec(st.bilFx, 2) + '</span></div></section>';
   // 종목
   h += secT('종목별 현황', '평가액 순 · 누르면 상세');
-  h += '<section class="card mtbl-card"><table class="mtbl htbl"><colgroup><col style="width:33%"><col style="width:27%"><col style="width:21%"><col style="width:19%"></colgroup><thead><tr><th>종목</th><th>평가액</th><th>수익률</th><th>비중</th></tr></thead><tbody>' +
+  h += '<section class="card mtbl-card"><table class="mtbl htbl"><colgroup><col style="width:38%"><col style="width:25%"><col style="width:20%"><col style="width:17%"></colgroup><thead><tr><th>종목</th><th>평가액</th><th>수익률</th><th>비중</th></tr></thead><tbody>' +
     B.holdings.slice().sort(function (a, b) { return b.eval - a.eval; }).map(function (x) { return holdRow(x, B); }).join('') + '</tbody></table></section>';
   // 연평균
   h += secT('연평균 수익률', '가중보유 12개월 미만은 누적');
@@ -1320,8 +1340,16 @@ function treemap(groups) {
     if (pw >= needW && ph >= nfs + pfs + 14) inner = '<b style="font-size:' + nfs + 'px">' + esc(name) + '</b><span style="font-size:' + pfs + 'px">' + p + '</span>';
     else if (pw >= (name.length + p.length + 1) * 6.4 + 12 && ph >= 20) inner = '<b style="font-size:11.5px">' + esc(name) + ' <span style="font-size:11px">' + p + '</span></b>';
     else { inner = ''; small.push({ g: g, r: r, cx: r.x + r.w / 2, by: r.y + r.h / 2 }); }
-    return '<div class="tmb' + (g.g === 'GOLD' ? ' dk' : '') + '" data-act="detail" data-k="group" data-g="' + esc(g.g) + '" style="left:' + r.x + '%;top:' + (r.y / H * 100) + '%;width:' + r.w + '%;height:' + (r.h / H * 100) + '%;--c:' + TM_COLOR[g.g] + '"><div class="tmi">' + inner + '</div></div>';
+    return '<div class="tmb' + (g.g === 'GOLD' ? ' dk' : '') + '" data-act="detail" data-k="group" data-g="' + esc(g.g) + '" style="left:' + r.x + '%;top:' + (r.y / H * 100) + '%;width:' + r.w + '%;height:' + (r.h / H * 100) + '%"><div class="tmi">' + inner + '</div></div>';
   }).join('');
+  // 칸 색은 SVG로 그림(삼성 인터넷 다크모드가 CSS 배경색을 어둡게 바꾸는 것 방지) + 밝은 외곽선
+  var G = 0.55, rects = '<defs><linearGradient id="tmgl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient></defs>' +
+    groups.map(function (g, i) {
+      var r = R[i], x = r.x + G, y = r.y + G, w = Math.max(0.1, r.w - 2 * G), hh = Math.max(0.1, r.h - 2 * G), rx = Math.min(2.6, w / 3, hh / 3);
+      var a = 'x="' + x.toFixed(3) + '" y="' + y.toFixed(3) + '" width="' + w.toFixed(3) + '" height="' + hh.toFixed(3) + '" rx="' + rx.toFixed(2) + '"';
+      return '<rect ' + a + ' fill="' + TM_COLOR[g.g] + '"/><rect ' + a + ' fill="url(#tmgl)" stroke="#ffffff" stroke-opacity=".55" stroke-width="1.3" vector-effect="non-scaling-stroke"/>';
+    }).join('');
+  boxes = '<svg class="tmsvg" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">' + rects + '</svg>' + boxes;
   var call = '';
   if (small.length) {
     small.sort(function (a, b) { return b.cx - a.cx || a.r.w - b.r.w; });
@@ -1398,7 +1426,7 @@ function sheetDetail(k, g) {
   if (k === 'period') { location.hash = 'buys'; return; }
   if (k === 'total') {
     title = '총 금융자산 구성';
-    body = dsum([['총 금융자산', won(B.total)], ['주식 평가액', won(B.eval)], ['현금(예금+예수금)', won(B.cash)], ['파킹(BIL)', won(B.bilKrw)]]) +
+    body = dsum([['총 금융자산', won(B.total)], ['주식 평가액', won(B.eval)], ['현금(예금+예수금)', won(B.cash)], ['채권(BIL)', won(B.bilKrw)]]) +
       tbl(['구분', '금액', '비중'], byAmt(B.groups).map(function (x) { return '<tr><td>' + dot(x.g) + ' ' + GROUP_NAME[x.g] + '</td><td>' + int(x.amt) + '</td><td>' + pct(x.w, 1) + '</td></tr>'; }));
   } else if (k === 'gain' || k === 'annual') {
     title = k === 'gain' ? '총 수익 내역' : '연평균 수익률';
@@ -1421,11 +1449,11 @@ function sheetDetail(k, g) {
     title = k === 'usd' ? '보유 달러 자산' : '환차손익 내역';
     body = dsum([['보유 USD', usd(B.usdHeld)], ['평균 매수환율', dec(B.avgFx, 2)], ['현재환율', dec(B.fx, 2)], ['환차손익', wonS(B.fxGain), cls(B.fxGain)]]) +
       (k === 'usd'
-        ? tbl(['종목', '수량', '현재가', '평가(USD)', '원화'], U.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + int(x.qty) + '</td><td>' + usd(x.price) + '</td><td>' + usd(x.evalUsd) + '</td><td>' + int(x.eval) + '</td></tr>'; }), '<tr><td>BIL(파킹)</td><td></td><td></td><td>' + usd(S.settings.bilUsd) + '</td><td>' + int(B.bilKrw) + '</td></tr>')
-        : tbl(['종목', '매수환율', '현재환율', '환차손익'], U.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + dec(x.buyFx, 2) + '</td><td>' + dec(B.fx, 2) + '</td><td class="' + cls(x.fxGain) + '">' + int(x.fxGain) + '</td></tr>'; }), '<tr><td>BIL(파킹)</td><td>' + dec(S.settings.bilFx, 2) + '</td><td>' + dec(B.fx, 2) + '</td><td class="' + cls(bilG) + '">' + int(bilG) + '</td></tr>') + '<p class="note">환차손익 = (현재환율 − 매수환율) × 평단 × 수량.</p>');
+        ? tbl(['종목', '수량', '현재가', '평가(USD)', '원화'], U.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + int(x.qty) + '</td><td>' + usd(x.price) + '</td><td>' + usd(x.evalUsd) + '</td><td>' + int(x.eval) + '</td></tr>'; }), '<tr><td>BIL(채권)</td><td></td><td></td><td>' + usd(S.settings.bilUsd) + '</td><td>' + int(B.bilKrw) + '</td></tr>')
+        : tbl(['종목', '매수환율', '현재환율', '환차손익'], U.map(function (x) { return '<tr><td>' + esc(x.t) + '</td><td>' + dec(x.buyFx, 2) + '</td><td>' + dec(B.fx, 2) + '</td><td class="' + cls(x.fxGain) + '">' + int(x.fxGain) + '</td></tr>'; }), '<tr><td>BIL(채권)</td><td>' + dec(S.settings.bilFx, 2) + '</td><td>' + dec(B.fx, 2) + '</td><td class="' + cls(bilG) + '">' + int(bilG) + '</td></tr>') + '<p class="note">환차손익 = (현재환율 − 매수환율) × 평단 × 수량.</p>');
   } else if (k === 'cash') {
-    title = '현금·파킹';
-    body = dsum([['정기예금', won(B.deposit)], ['예수금', won(B.cashBal)], ['파킹 BIL', usd(S.settings.bilUsd) + ' · ' + won(B.bilKrw)], ['현금+파킹 합계', won(B.cash + B.bilKrw)]]) +
+    title = '현금·채권';
+    body = dsum([['정기예금', won(B.deposit)], ['예수금', won(B.cashBal)], ['채권 BIL', usd(S.settings.bilUsd) + ' · ' + won(B.bilKrw)], ['현금+채권 합계', won(B.cash + B.bilKrw)]]) +
       '<p class="note">BIL 매수환율 ' + dec(S.settings.bilFx, 2) + ' · 연배당률 ' + pct(S.settings.bilDy, 2) + ' · 예상 연 세후배당 ' + won(S.settings.bilDy * B.bilKrw * (1 - S.settings.bilTax)) + '</p>';
   } else if (k === 'group') {
     var gr = B.groups.filter(function (x) { return x.g === g; })[0] || { amt: 0, w: 0 };
@@ -1750,7 +1778,7 @@ function vTarget(C) {
   h += '<section class="card hero" id="tgHero">' + tgHeroHTML(R, m) + '</section>';
   h += '<section class="card"><div class="tgh"><b>매수 조건</b></div>' +
     '<div class="tgrow"><div class="tgl">월 매수액</div>' + stepper('buy', '만원', 10, '월 매수액') + '</div>' +
-    '<div class="tgrow"><div class="tgl">월 현금 증가<small>현금+파킹에 더해짐 · <span id="tgCashAdd">' + man(t.cashInc * m, 0) + '</span></small></div>' + stepper('cashInc', '만원', 10, '월 현금 증가') + '</div>' +
+    '<div class="tgrow"><div class="tgl">월 현금 증가<small>현금+채권에 더해짐 · <span id="tgCashAdd">' + man(t.cashInc * m, 0) + '</span></small></div>' + stepper('cashInc', '만원', 10, '월 현금 증가') + '</div>' +
     '<div class="tgrow"><div class="tgl">기간</div>' + stepper('months', '개월', 1, '기간') + '</div></section>';
   h += '<section class="card"><div class="tgh"><b>월 매수 배분</b><span id="tgSum" class="pill ' + (Math.abs(R.allocSum - 1) < 0.0005 ? 'okp' : 'warnp') + '">합계 ' + dec(R.allocSum * 100, 0) + '%</span></div>' +
     tgOrderKeys(R, TG_ALLOC).map(function (k) { return '<div class="tgrow"><div class="tgl">' + dot(k) + GROUP_NAME[k] + '<small data-tgm="' + k + '">' + man(t.buy * t.alloc[k], 0) + '</small></div>' + stepper('alloc.' + k, '%', 1, GROUP_NAME[k] + ' 배분') + '</div>'; }).join('') + '</section>';
@@ -1855,7 +1883,7 @@ function vSim(C) {
 function vSetup() {
   var st = S.settings;
   var h = '<div class="stack" style="margin-top:6px">';
-  h += '<section class="card"><b>현금·파킹</b><div class="grid2" style="margin-top:8px">' +
+  h += '<section class="card"><b>현금·채권</b><div class="grid2" style="margin-top:8px">' +
     fld('su-dep', '정기예금', 'settings', 'deposit', st.deposit) + fld('su-cash', '예수금', 'settings', 'cashBal', st.cashBal) +
     fld('su-bil', 'BIL 보유 USD', 'settings', 'bilUsd', st.bilUsd, 'any') + fld('su-bilfx', 'BIL 매수환율', 'settings', 'bilFx', st.bilFx, 'any') +
     fld('su-bildy', 'BIL 연배당률(%)', 'settings', 'bilDy', st.bilDy, 'any', 'pct') + fld('su-goal', '목표 금융자산', 'settings', 'goal', st.goal) + '</div></section>';
@@ -2026,8 +2054,8 @@ function sheetMonth(ym) {
   var C = ctx(), row = C.M.rows.filter(function (r) { return r.ym === ym; })[0];
   if (!row) return;
   var live = !!row.live;
-  var body = '<div class="preview">총자산 <b>' + won(row.total) + '</b><br>주식 ' + won(row.stock) + ' · 현금+파킹 ' + won(row.cash) + '<br>매수액 ' + won(row.buy) + ' · 환율 ' + dec(row.fx, 2) + '</div>' +
-    (live ? '' : '<div class="grid2"><div class="field"><label for="mo-t">총자산</label><input id="mo-t" type="number" value="' + Math.round(row.total) + '"></div><div class="field"><label for="mo-s">주식</label><input id="mo-s" type="number" value="' + Math.round(row.stock) + '"></div><div class="field"><label for="mo-c">현금+파킹</label><input id="mo-c" type="number" value="' + Math.round(row.cash) + '"></div><div class="field"><label for="mo-b">매수액</label><input id="mo-b" type="number" value="' + Math.round(row.buy) + '"></div><div class="field"><label for="mo-fx">평균환율</label><input id="mo-fx" type="number" step="any" value="' + row.fx + '"></div></div>') +
+  var body = '<div class="preview">총자산 <b>' + won(row.total) + '</b><br>주식 ' + won(row.stock) + ' · 현금+채권 ' + won(row.cash) + '<br>매수액 ' + won(row.buy) + ' · 환율 ' + dec(row.fx, 2) + '</div>' +
+    (live ? '' : '<div class="grid2"><div class="field"><label for="mo-t">총자산</label><input id="mo-t" type="number" value="' + Math.round(row.total) + '"></div><div class="field"><label for="mo-s">주식</label><input id="mo-s" type="number" value="' + Math.round(row.stock) + '"></div><div class="field"><label for="mo-c">현금+채권</label><input id="mo-c" type="number" value="' + Math.round(row.cash) + '"></div><div class="field"><label for="mo-b">매수액</label><input id="mo-b" type="number" value="' + Math.round(row.buy) + '"></div><div class="field"><label for="mo-fx">평균환율</label><input id="mo-fx" type="number" step="any" value="' + row.fx + '"></div></div>') +
     '<div class="grid2"><div class="field"><label for="mo-i">이슈</label><input id="mo-i" value="' + esc(row.issue || '') + '" placeholder="예: 이란종전"></div><div class="field"><label for="mo-m">비고</label><input id="mo-m" value="' + esc(row.memo || '') + '"></div></div>' +
     (live ? '<p class="note" style="margin:0">마감하면 지금 값이 ' + ym.slice(0, 4) + '년 ' + (+ym.slice(5)) + '월 기록으로 고정됩니다. 월말(또는 다음 달 초)에 하세요.</p>' : '');
   openSheet(live ? ym + ' 마감' : ym + ' 기록 수정', body, '<button class="btn pri" type="button" id="moSave">' + (live ? '마감하기' : '저장') + '</button>' + (live ? '<button class="btn" type="button" id="moMemo">메모만 저장</button>' : '<button class="btn danger" type="button" id="moDel">삭제</button>'), function () {
@@ -2101,9 +2129,9 @@ function exportXlsx() {
     X.utils.book_append_sheet(wb, X.utils.aoa_to_sheet(tr), '거래내역');
     var bd = [['종목', '통화', '계좌', '보유수량', '평단', '현재가', '매수총액', '평가총액', '평가수익', '수익률', '연평균수익율', '가중보유(개월)', '세후배당 누적']];
     C.B.holdings.forEach(function (x) { bd.push([x.t, x.c, x.acct, x.qty, x.avg, x.price, x.cost, x.eval, x.profit, x.rate, x.annual, x.months, x.divRecv]); });
-    bd.push([], ['총금융자산', C.B.total], ['현금계', C.B.cash], ['파킹(BIL) 평가액', C.B.bilKrw], ['총 수익', C.B.totalGain], ['현재환율', C.B.fx], ['시세 기준일', st.priceAt]);
+    bd.push([], ['총금융자산', C.B.total], ['현금계', C.B.cash], ['채권(BIL) 평가액', C.B.bilKrw], ['총 수익', C.B.totalGain], ['현재환율', C.B.fx], ['시세 기준일', st.priceAt]);
     X.utils.book_append_sheet(wb, X.utils.aoa_to_sheet(bd), 'BOARD');
-    var me = [['연월', '이슈', '평균환율', '매수액', '총자산', '총자산변동', '증감율', '주식', '현금+파킹', '비고']];
+    var me = [['연월', '이슈', '평균환율', '매수액', '총자산', '총자산변동', '증감율', '주식', '현금+채권', '비고']];
     C.M.rows.forEach(function (r) { me.push([r.ym, r.issue || '', r.fx, r.buy, r.total, r.chg == null ? '' : r.chg, r.chgRate == null ? '' : r.chgRate, r.stock, r.cash, (r.live ? '(진행중) ' : '') + (r.memo || '')]); });
     X.utils.book_append_sheet(wb, X.utils.aoa_to_sheet(me), '월말일현황');
     var dv = [['연월', '종목', 'USD(세후)', 'KRW(세후)']]; S.dividend.rows.forEach(function (r) { dv.push([r.ym, r.t, r.usd || '', r.krw]); });

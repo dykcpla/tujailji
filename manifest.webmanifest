@@ -1,6 +1,6 @@
 {
-  "name": "투자일지",
-  "short_name": "투자일지",
+  "name": "김도연 투자일지",
+  "short_name": "김도연 투자일지",
   "description": "투자일지 엑셀을 휴대폰에서 보는 앱",
   "start_url": "./",
   "scope": "./",
