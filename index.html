@@ -390,6 +390,7 @@ td { border-bottom-color: var(--line); }
 .mvph { position: absolute; inset: 0; background: radial-gradient(120% 90% at 30% 20%, #26345f, #0b1020 70%); background-size: cover; transform-origin: 50% 40%; will-change: transform; }
 .mvph.has { background-size: cover; background-repeat: no-repeat; }
 .mvshade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 9, 15, .35) 0%, rgba(7, 9, 15, 0) 30%, rgba(7, 9, 15, .2) 52%, rgba(7, 9, 15, .92) 100%); }
+.mvph.soft { filter: blur(.35em) saturate(1.05); inset: -1.2em; }
 .mvph.fit { inset: 0 0 auto 0; height: 63%; transform-origin: 50% 50%; }
 .mvshade.fit { background: linear-gradient(180deg, rgba(7, 9, 15, .25) 0%, rgba(7, 9, 15, 0) 22%, rgba(7, 9, 15, 0) 40%, #07090f 63%, #07090f 100%); }
 .mvstage .li { border: 0; }
@@ -549,10 +550,15 @@ td { border-bottom-color: var(--line); }
   var photoP = null;
   window.__photos = function (onFresh) {
     if (!photoP) photoP = idb(function (s) { return s.get('photos'); }).catch(function () { return null; }).then(function (c) {
-      var stale = !c || !c.at || Date.now() - c.at > 6 * 3600e3;
-      if (stale && cfg()) api('photos=1').then(function (j) {
+      // 앱을 열 때마다 목록(이름·수정시각)만 가볍게 확인하고, 달라졌을 때만 사진을 다시 받음
+      var sigOf = function (l) { return l.map(function (p) { return p.name + p.modified; }).sort().join('|'); };
+      if (cfg()) api('photos=list').then(function (j) {
+        if (!j || !j.photos) return null;
+        if (j.lite) return c && c.sig === sigOf(j.photos) ? null : api('photos=1');
+        return j; // 예전 스크립트는 목록 요청에도 사진 전체를 돌려줌
+      }).then(function (j) {
         if (!j || !j.photos) return;
-        var sig = j.photos.map(function (p) { return p.name + p.modified; }).join('|');
+        var sig = sigOf(j.photos);
         idb(function (s) { return s.put({ at: Date.now(), sig: sig, list: j.photos }, 'photos'); }).catch(function () {});
         if (!c || c.sig !== sig) { photoP = Promise.resolve(toMap(j.photos)); if (onFresh) onFresh(toMap(j.photos)); }
       }).catch(function () {});
@@ -2090,7 +2096,9 @@ function mvMount() {
   var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (MV.io) MV.io.disconnect();
   if (window.IntersectionObserver) { MV.io = new IntersectionObserver(function (es) { var on = es[es.length - 1].isIntersecting; if (on && !MV.user && !MV.ended && !calm) play(); else if (!on && MV.playing) { pause(); MV.user = false; } }, { threshold: 0.35 }); MV.io.observe(stage); }
-  var setPh = function (m) { MV.photos = m || {}; [].forEach.call(root.querySelectorAll('[data-ph]'), function (el) { var u = MV.photos[el.dataset.ph]; if (u) { el.style.backgroundImage = 'url(' + u + ')'; el.classList.add('has'); } }); };
+  // 아직 받지 못한 사진 자리는 가진 사진을 흐리게 깔아 채움
+  var alt = { start: 'open', eval: 'together', ring: 'end', future: 'together', f2: 'travel', f3: 'study', f4: 'together', f5: 'open', f6: 'end' };
+  var setPh = function (m) { MV.photos = m || {}; [].forEach.call(root.querySelectorAll('[data-ph]'), function (el) { var k = el.dataset.ph, u = MV.photos[k], soft = false; if (!u && alt[k]) { u = MV.photos[alt[k]]; soft = k !== 'ring'; } if (u) { el.style.backgroundImage = 'url(' + u + ')'; el.classList.add('has'); el.classList.toggle('soft', soft); } }); };
   if (MV.photos) setPh(MV.photos);
   if (window.__photos) window.__photos(setPh).then(setPh).catch(function () {});
 }
