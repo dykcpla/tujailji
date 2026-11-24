@@ -436,6 +436,8 @@ td { border-bottom-color: var(--line); }
 .mvfut { position: absolute; left: 0; right: 0; top: 16.6em; width: 100%; height: 13em; overflow: visible; }
 .mvfut .gl { font-size: 9px; fill: rgba(255, 255, 255, .6); font-family: inherit; }
 .fline { font-size: 1.85em; font-weight: 800; letter-spacing: -0.03em; line-height: 1.3; word-break: keep-all; min-height: 2.6em; display: flex; align-items: flex-end; }
+.ftag { display: inline-block; font-size: 1.15em; font-weight: 700; padding: .28em .8em; border-radius: 99px; background: rgba(255, 138, 122, .2); color: #ffb3a8; margin-bottom: .55em; }
+.ftag.free { background: rgba(95, 224, 183, .18); color: #7ff0cb; }
 .fkids { font-size: 1.3em; color: rgba(242, 244, 251, .66); margin-top: .5em; min-height: 1.4em; }
 .fchips { display: flex; gap: .5em; margin-top: 1em; }
 .fchips span { flex: 1; text-align: center; font-size: 1.12em; font-weight: 700; padding: .42em 0; border-radius: 99px; background: rgba(255, 255, 255, .08); color: rgba(242, 244, 251, .5); font-variant-numeric: tabular-nums; }
@@ -1963,7 +1965,9 @@ function mvData(C) {
   };
   var hz = MV_H.map(function (n) {
     var at = new Date(now.getFullYear() + n, now.getMonth(), now.getDate());
-    return { n: n, year: at.getFullYear(), v: yr[n], pass: yr[n] * 0.04 / 12, line: life(yr[n]),
+    return { n: n, year: at.getFullYear(), v: yr[n], pass: yr[n] * 0.04 / 12,
+      tag: n < 3 ? '빡세게 달리는 3년' : n === 3 ? '빡센 3년, 여기까지' : '돈에 구애받지 않는 시간',
+      line: n === 3 ? '딱 여기까지만 빡세게. 이 3년이 평생을 바꿔.' : n === 5 ? '이제 돈에 구애받지 않고, 하고 싶은 일을 편안하게.' : life(yr[n]),
       kids: kids.map(function (k) { return (k.name.length > 2 ? k.name.slice(1) : k.name) + ' ' + Math.floor((at - new Date(k.birth)) / (365.25 * 864e5)) + '살'; }).join(', ') };
   });
   var good = [months + '개월 동안 ' + nBuy.toLocaleString('ko-KR') + '번, 멈추지 않고 샀어', '한 달 평균 ' + mvMan(MB.avg) + '원씩 모았어'];
@@ -2016,7 +2020,7 @@ function mvHTML(D) {
     (gy > 8 ? '<line x1="10" x2="312" y1="' + gy.toFixed(1) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="3 4"/><text x="312" y="' + (gy - 4).toFixed(1) + '" text-anchor="end" class="gl">' + eok(D.goal) + '</text>' : '') +
     '<path d="' + fline + '" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="2"/><path d="' + fline + '" fill="none" stroke="#f3c969" stroke-width="3" stroke-linecap="round" clip-path="url(#mvclip)"/>' +
     '<circle data-role="dot" r="5" fill="#fff" stroke="#f3c969" stroke-width="3"/></svg>' +
-    '<div class="mvtx bottom"><div class="fline" data-role="fl"></div><div class="fkids" data-role="fk"></div><div class="fchips">' + D.hz.map(function (z) { return '<span>' + z.n + '년</span>'; }).join('') + '</div></div></div>';
+    '<div class="mvtx bottom"><div class="ftag" data-role="ft"></div><div class="fline" data-role="fl"></div><div class="fkids" data-role="fk"></div><div class="fchips">' + D.hz.map(function (z) { return '<span>' + z.n + '년</span>'; }).join('') + '</div></div></div>';
   h += '<div class="mvsc s6" data-a="47" data-b="54">' +
     [['study', '50% 25%', '아이들은, 하고 싶은 공부를.'], ['travel', '50% 40%', '우리는, 가고 싶은 곳을.'], ['together', '50% 30%', '그리고 넷이 함께 있는 시간을.']].map(function (x, i) {
       return '<div class="sub" data-i="' + i + '">' + ph(x[0], x[1], i > 0) + '<div class="mvtx bottom"><div class="k1">' + x[2] + '</div></div></div>';
@@ -2047,8 +2051,8 @@ function mvMount() {
       var k = Math.min(5, Math.floor(lt / 2.5)), sl = lt - k * 2.5, z = D.hz[k], prev = k ? D.hz[k - 1] : { n: 0, v: D.total }, p = mvEase(mvSeg(sl, 0, 1.3));
       var n = prev.n + (z.n - prev.n) * p, v = prev.v + (z.v - prev.v) * p, o = k < 5 ? Math.min(mvSeg(sl, 0, 0.35), 1 - mvSeg(sl, 2.25, 2.5)) : mvSeg(sl, 0, 0.35);
       sc.r('fn').textContent = z.n + '년 뒤'; sc.r('fy').textContent = z.year + '년'; sc.r('fv').innerHTML = mvEok(v);
-      sc.r('fp').innerHTML = '일하지 않아도 매달 <b>' + mvMan(v * 0.04 / 12) + '원</b>'; sc.r('fl').textContent = z.line; sc.r('fk').textContent = z.kids;
-      ['fn', 'fy', 'fl', 'fk'].forEach(function (x) { sc.r(x).style.opacity = o; });
+      sc.r('fp').innerHTML = '일하지 않아도 매달 <b>' + mvMan(v * 0.04 / 12) + '원</b>'; sc.r('fl').textContent = z.line; sc.r('ft').textContent = z.tag; sc.r('ft').className = 'ftag' + (z.n > 3 ? ' free' : ''); sc.r('fk').textContent = z.kids;
+      ['fn', 'fy', 'fl', 'fk', 'ft'].forEach(function (x) { sc.r(x).style.opacity = o; });
       var lo = Math.floor(n), hi = Math.min(20, lo + 1), yv = D.yr[lo] + (D.yr[hi] - D.yr[lo]) * (n - lo), X = Math.sqrt(n / 20) * 300 + 10, Y = 118 - yv / D.yr[20] * 104;
       sc.r('clip').setAttribute('width', X.toFixed(1)); sc.r('dot').setAttribute('cx', X.toFixed(1)); sc.r('dot').setAttribute('cy', Y.toFixed(1));
       [].forEach.call(sc.el.querySelectorAll('.fbg'), function (g, i) { g.style.opacity = i === k ? (k ? mvSeg(sl, 0, 0.7) : 1) : i === k - 1 ? 1 : 0; if (i === k) g.firstChild.style.transform = 'scale(' + (1.02 + 0.05 * sl / 2.5) + ')'; });
