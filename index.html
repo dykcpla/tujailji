@@ -382,6 +382,72 @@ td { border-bottom-color: var(--line); }
 .sec-t { padding-left: 4px; padding-right: 4px; }
 .pricebar { padding-left: 4px; padding-right: 4px; }
 .htbl td .hn b { white-space: nowrap; }
+
+/* 동기부여 영상 */
+.mvcard { padding: 0 !important; overflow: hidden; }
+.mvstage { position: relative; width: 100%; aspect-ratio: 4 / 5; background: #07090f; color: #f2f4fb; overflow: hidden; cursor: pointer; font-size: 10px; user-select: none; -webkit-user-select: none; }
+.mvsc { position: absolute; inset: 0; }
+.mvph { position: absolute; inset: 0; background: radial-gradient(120% 90% at 30% 20%, #26345f, #0b1020 70%); background-size: cover; transform-origin: 50% 40%; will-change: transform; }
+.mvph.has { background-size: cover; background-repeat: no-repeat; }
+.mvshade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 9, 15, .35) 0%, rgba(7, 9, 15, 0) 30%, rgba(7, 9, 15, .2) 52%, rgba(7, 9, 15, .92) 100%); }
+.mvph.fit { inset: 0 0 auto 0; height: 63%; transform-origin: 50% 50%; }
+.mvshade.fit { background: linear-gradient(180deg, rgba(7, 9, 15, .25) 0%, rgba(7, 9, 15, 0) 22%, rgba(7, 9, 15, 0) 40%, #07090f 63%, #07090f 100%); }
+.mvstage .li { border: 0; }
+.mvshade.deep { background: rgba(7, 9, 15, .8); }
+.mvtx { position: absolute; left: 2.4em; right: 2.4em; }
+.mvtx.top { top: 2.6em; } .mvtx.bottom { bottom: 2.6em; } .mvtx.c { text-align: center; }
+.mvstage .k1 { font-size: 2.9em; font-weight: 800; letter-spacing: -0.035em; line-height: 1.22; text-shadow: 0 2px 14px rgba(0, 0, 0, .55); word-break: keep-all; }
+.mvstage .k2 { font-size: 2.1em; font-weight: 800; letter-spacing: -0.03em; }
+.mvstage .k2 i, .mvstage .k3 i { font-style: normal; font-size: .72em; margin-left: .04em; }
+.mvstage .k2.mt { margin-top: 1.1em; }
+.mvstage .k3 { font-size: 1.55em; font-weight: 600; margin-top: .55em; color: rgba(242, 244, 251, .88); text-shadow: 0 1px 10px rgba(0, 0, 0, .6); word-break: keep-all; }
+.mvstage .k3.dim { color: rgba(242, 244, 251, .62); }
+.mvstage .k3 u { text-decoration: none; color: #f3c969; font-weight: 800; }
+.mvstage .lab { font-size: 1.45em; font-weight: 600; color: rgba(242, 244, 251, .7); text-shadow: 0 1px 8px rgba(0, 0, 0, .6); }
+.mvstage .num { font-size: 4.6em; font-weight: 800; letter-spacing: -0.045em; line-height: 1.1; color: #f3c969; font-variant-numeric: tabular-nums; margin-top: .08em; white-space: nowrap; }
+.mvstage .num i, .mvstats b i { font-style: normal; font-size: .5em; font-weight: 700; margin-left: .06em; letter-spacing: 0; }
+.mvchart { position: absolute; left: 0; right: 0; top: 13.2em; width: 100%; height: 13.5em; }
+.mvaxis { position: absolute; left: 2.4em; right: 2.4em; top: 27.2em; display: flex; justify-content: space-between; font-size: 1.15em; color: rgba(242, 244, 251, .5); }
+.mvaxis span { font-size: 1em; }
+.mvstats { position: absolute; left: 2.4em; right: 2.4em; bottom: 2.4em; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1em; }
+.mvstats .st { border-top: 2px solid rgba(243, 201, 105, .55); padding-top: .8em; }
+.mvstats b { display: block; font-size: 1.75em; font-weight: 800; letter-spacing: -0.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.mvstats span { display: block; font-size: 1.12em; color: rgba(242, 244, 251, .6); margin-top: .25em; }
+.mvstage .li { display: flex; align-items: flex-start; gap: .65em; font-size: 1.62em; font-weight: 600; line-height: 1.35; margin-top: .72em; word-break: keep-all; }
+.mvstage .li em { flex: none; width: .62em; height: .62em; margin-top: .4em; border-radius: 50%; background: #5fe0b7; box-shadow: 0 0 0 .22em rgba(95, 224, 183, .18); }
+.mvstage .li.todo em { background: #ff8a7a; box-shadow: 0 0 0 .22em rgba(255, 138, 122, .18); border-radius: .12em; }
+.mvring { position: absolute; left: 50%; top: 3em; width: 21em; height: 21em; margin-left: -10.5em; }
+.mvring svg { width: 100%; height: 100%; display: block; }
+.mvring .in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.mvring .in b { font-size: 4.4em; font-weight: 800; letter-spacing: -0.04em; color: #f3c969; font-variant-numeric: tabular-nums; }
+.mvring .in span { font-size: 1.3em; color: rgba(242, 244, 251, .6); }
+.fstep { display: flex; align-items: baseline; gap: .7em; }
+.fstep b { font-size: 2.5em; font-weight: 800; letter-spacing: -0.03em; }
+.fstep span { font-size: 1.4em; color: rgba(242, 244, 251, .6); font-variant-numeric: tabular-nums; }
+.fpass { font-size: 1.5em; margin-top: .3em; color: rgba(242, 244, 251, .85); }
+.fpass b { color: #5fe0b7; font-weight: 800; font-variant-numeric: tabular-nums; }
+.mvfut { position: absolute; left: 0; right: 0; top: 16.6em; width: 100%; height: 13em; overflow: visible; }
+.mvfut .gl { font-size: 9px; fill: rgba(255, 255, 255, .6); font-family: inherit; }
+.fline { font-size: 1.85em; font-weight: 800; letter-spacing: -0.03em; line-height: 1.3; word-break: keep-all; min-height: 2.6em; display: flex; align-items: flex-end; }
+.fkids { font-size: 1.3em; color: rgba(242, 244, 251, .66); margin-top: .5em; min-height: 1.4em; }
+.fchips { display: flex; gap: .5em; margin-top: 1em; }
+.fchips span { flex: 1; text-align: center; font-size: 1.12em; font-weight: 700; padding: .42em 0; border-radius: 99px; background: rgba(255, 255, 255, .08); color: rgba(242, 244, 251, .5); font-variant-numeric: tabular-nums; }
+.fchips span.done { color: rgba(243, 201, 105, .75); }
+.fchips span.on { background: #f3c969; color: #1b1405; }
+.mvsc .sub { position: absolute; inset: 0; }
+.mvbig { position: absolute; left: 50%; top: 50%; width: 5.6em; height: 5.6em; margin: -2.8em 0 0 -2.8em; border-radius: 50%; background: rgba(7, 9, 15, .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; color: #fff; pointer-events: none; transition: opacity .2s; }
+.mvbig { font-size: 1em; } .mvbig::first-letter { font-size: 2.2em; }
+.mvctl { display: flex; align-items: center; gap: 10px; padding: 8px 12px 6px; }
+.mvpp { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--box); background: rgba(127, 127, 127, .12); color: var(--text); font-size: 13px; cursor: pointer; }
+.mvpp:focus-visible, .mvseek:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mvseek { flex: 1; min-width: 0; height: 28px; margin: 0; -webkit-appearance: none; appearance: none; background: transparent; --p: 0%; touch-action: none; }
+.mvseek::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, #f3c969 var(--p), rgba(127, 127, 127, .3) var(--p)); }
+.mvseek::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(127, 127, 127, .3); }
+.mvseek::-moz-range-progress { height: 4px; border-radius: 2px; background: #f3c969; }
+.mvseek::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%; background: #f3c969; border: 2px solid #fff; }
+.mvseek::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #f3c969; border: 2px solid #fff; }
+.mvtime { flex: none; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.mvnote { margin: 0; padding: 0 12px 12px; font-size: 11px; line-height: 1.5; color: var(--muted); }
 #pwaSetup { position: fixed; inset: 0; z-index: 80; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
 #pwaSetup .setup-in { width: 100%; max-width: 420px; display: grid; gap: 12px; }
 #pwaSetup h2 { margin: 0; font-size: 22px; }
@@ -457,6 +523,31 @@ td { border-bottom-color: var(--line); }
       return Promise.reject({ code: 'bad_request', message: tool });
     }
   };
+  /* --- 영상용 가족사진: 드라이브 「영상사진」 폴더 → 이 기기에만 저장(IndexedDB) --- */
+  function idb(fn) {
+    return new Promise(function (res, rej) {
+      var q; try { q = indexedDB.open('tjapp-photos', 1); } catch (e) { return rej(e); }
+      q.onupgradeneeded = function () { q.result.createObjectStore('kv'); };
+      q.onerror = function () { rej(q.error); };
+      q.onsuccess = function () { var tx = q.result.transaction('kv', 'readwrite'), r = fn(tx.objectStore('kv')); tx.oncomplete = function () { res(r && r.result); }; tx.onerror = function () { rej(tx.error); }; };
+    });
+  }
+  function toMap(list) { var m = {}; (list || []).forEach(function (p) { m[p.name] = 'data:' + p.type + ';base64,' + p.b64; }); return m; }
+  var photoP = null;
+  window.__photos = function (onFresh) {
+    if (!photoP) photoP = idb(function (s) { return s.get('photos'); }).catch(function () { return null; }).then(function (c) {
+      var stale = !c || !c.at || Date.now() - c.at > 6 * 3600e3;
+      if (stale && cfg()) api('photos=1').then(function (j) {
+        if (!j || !j.photos) return;
+        var sig = j.photos.map(function (p) { return p.name + p.modified; }).join('|');
+        idb(function (s) { return s.put({ at: Date.now(), sig: sig, list: j.photos }, 'photos'); }).catch(function () {});
+        if (!c || c.sig !== sig) { photoP = Promise.resolve(toMap(j.photos)); if (onFresh) onFresh(toMap(j.photos)); }
+      }).catch(function () {});
+      return toMap(c && c.list);
+    });
+    return photoP;
+  };
+
   /* --- 앱에서 바꾼 값을 엑셀 칸에 저장 (앱스 스크립트 w=1) --- */
   window.__xlsxWrite = function (fileId, sheet, cells) {
     return api('w=1&id=' + encodeURIComponent(fileId) + '&s=' + encodeURIComponent(sheet) + '&cells=' + encodeURIComponent(JSON.stringify(cells))).then(function (j) {
@@ -1237,6 +1328,7 @@ function render() {
   var box = buildView(r);
   Object.keys(VC).forEach(function (k) { VC[k].el.hidden = k !== r; });
   $('#ttl').textContent = SUB[r] || TITLES[r];
+  if (r === 'monthly') mvMount();
   idlePrebuild();
 }
 function idlePrebuild() {
@@ -1614,6 +1706,8 @@ function vMonthly(C) {
   h += '<section class="card">' + assetChart(M, st.goal) + '</section>';
   // milestones
   var ms = me.milestones || [];
+  h += secT('우리 가족의 여정', '힘들 때 보는 1분');
+  h += '<section class="card mvcard"><div id="mvRoot"></div></section>';
   h += secT('달성 기록', '');
   h += '<section class="card"><div class="tbl-wrap"><table><thead><tr><th>목표액</th><th>달성일</th><th>소요</th></tr></thead><tbody>' + ms.map(function (m, i) {
     var prev = ms[i - 1], dur = prev && prev.date && m.date ? (ENG.serial(m.date) - ENG.serial(prev.date) + 1) / 30 : null;
@@ -1818,6 +1912,171 @@ document.addEventListener('input', function (e) {
 document.addEventListener('focusout', function (e) {
   var el = e.target; if (el.dataset && el.dataset.tg) el.value = tgFmt(el.dataset.tg);
 });
+
+/* ---------- 동기부여 영상: 숫자·문구는 모두 앱 데이터에서 매번 다시 계산 ---------- */
+var MV = { t: 0, playing: false, ended: false, raf: 0, last: 0, root: null, scenes: null, photos: null, io: null };
+window.__mv = MV;
+var MV_LEN = 58, MV_H = [1, 2, 3, 5, 10, 20];
+function mvSeg(t, a, b) { return t <= a ? 0 : t >= b ? 1 : (t - a) / (b - a); }
+function mvEase(p) { return 1 - Math.pow(1 - p, 3); }
+function mvEok(v) {
+  v = Math.round(v || 0); var e = Math.floor(v / 1e8), m = Math.round((v - e * 1e8) / 1e4); if (m === 10000) { e++; m = 0; }
+  if (e >= 10) m = Math.round(m / 100) * 100;
+  return (e ? e + '<i>억</i>' : '') + (m || !e ? ' ' + m.toLocaleString('ko-KR') + '<i>만</i>' : '');
+}
+function mvMan(v) { return Math.round((v || 0) / 1e4).toLocaleString('ko-KR') + '만'; }
+function mvData(C) {
+  var B = C.B, MB = C.MB, st = S.settings, now = new Date(), goal = st.goal || 1e9, total = B.total;
+  var series = C.M.rows.filter(function (r) { return r.total > 0; }).map(function (r) { return r.total; });
+  var first = MB.list.length ? MB.list[0].ym : null;
+  var months = first ? (now.getFullYear() - +first.slice(0, 4)) * 12 + (now.getMonth() + 1 - +first.slice(5, 7)) + 1 : series.length;
+  var invested = 0, nBuy = 0; MB.list.forEach(function (o) { invested += o.total; nBuy += o.n; });
+  // 앞으로의 가정: 최근 12개월 평균만큼 매수(PLAN 목표일까지), 연 수익률 5%(설정 videoRate로 변경 가능)
+  var rec = MB.list.slice(-12).filter(function (o) { return o.total > 0; }), c = 0, tg = st.target;
+  rec.forEach(function (o) { c += o.total; }); c = rec.length ? Math.round(c / rec.length / 1e5) * 1e5 : 0;
+  if (tg && tg.buy > 0) c = tg.buy + (tg.cashInc || 0); // 「목표비중」 탭의 월 매수액 + 월 현금 증가를 우선 사용
+  var rate = st.videoRate || 0.05, mr = Math.pow(1 + rate, 1 / 12) - 1;
+  var endC = S.plan && S.plan.target ? new Date(S.plan.target) : new Date(now.getFullYear() + 3, 0, 1);
+  var v = total, d = new Date(now.getFullYear(), now.getMonth(), 1), reach = total >= goal ? { now: true } : null, yr = [total];
+  for (var i = 1; i <= 240; i++) {
+    d = new Date(d.getFullYear(), d.getMonth() + 1, 1); v = v * (1 + mr) + (d < endC ? c : 0);
+    if (!reach && v >= goal) reach = { y: d.getFullYear(), m: d.getMonth() + 1 };
+    if (i % 12 === 0) yr.push(v);
+  }
+  var kids = ((S.plan && S.plan.people) || []).filter(function (p) { return p.kid && p.birth; });
+  var life = function (x) {
+    var r = x / goal;
+    return r < 0.5 ? '흔들려도 버틸 힘이 생겨.' : r < 0.7 ? '대출이 무섭지 않은 버팀목이 돼.' : r < 1 ? '여행도 학원도, 망설임이 줄어.' :
+      r < 1.5 ? '목표를 넘었어. 일은 의무가 아니라 선택.' : r < 2.5 ? '자산이 대신 일해. 둘이 함께 쉬어도 돼.' : '아이들 독립까지 돕고도, 노후는 그대로.';
+  };
+  var hz = MV_H.map(function (n) {
+    var at = new Date(now.getFullYear() + n, now.getMonth(), now.getDate());
+    return { n: n, year: at.getFullYear(), v: yr[n], pass: yr[n] * 0.04 / 12, line: life(yr[n]),
+      kids: kids.map(function (k) { return (k.name.length > 2 ? k.name.slice(1) : k.name) + ' ' + Math.floor((at - new Date(k.birth)) / (365.25 * 864e5)) + '살'; }).join(', ') };
+  });
+  var good = [months + '개월 동안 ' + nBuy.toLocaleString('ko-KR') + '번, 멈추지 않고 샀어', '한 달 평균 ' + mvMan(MB.avg) + '원씩 모았어'];
+  var ta = ENG.taxAccts(st, C.T)[now.getFullYear()], lim = st.limits || {};
+  if (ta && lim.isa && ta.isa >= lim.isa * 0.9) good.push('올해 절세계좌 한도를 거의 다 채웠어');
+  if (B.divAll > 0) good.push('배당으로만 ' + mvMan(B.divAll) + '원을 받았어');
+  if (B.totalGain > 0) good.push('환율이 흔들려도 누적 수익은 +' + mvMan(B.totalGain) + '원');
+  var w = {}; B.groups.forEach(function (g) { w[g.g] = g.w; });
+  var p1 = function (x) { return (Math.round(x * 1000) / 10) + '%'; }, bad = [];
+  if ((w.CASH || 0) < 0.15) bad.push('현금 ' + p1(w.CASH || 0) + ', 15%까지 채우기');
+  if ((w.SPCX || 0) > 0.03) bad.push('SPCX ' + p1(w.SPCX) + ', 3% 안으로 지키기');
+  if ((w['S&P500'] || 0) < 0.35) bad.push('S&P500 ' + p1(w['S&P500'] || 0) + ', 35%까지 키우기');
+  if ((w.SCHD || 0) > 0.25) bad.push('SCHD ' + p1(w.SCHD) + ', 새 돈으로 천천히 희석');
+  if (B.fxGain < 0) bad.push('환차손 ' + mvMan(-B.fxGain) + '원에 흔들리지 않기');
+  if (!bad.length) bad.push('지금처럼만. 계획대로 가고 있어');
+  return { total: total, goal: goal, pct: Math.min(1, total / goal), left: Math.max(0, goal - total), series: series, months: months, invested: invested, nBuy: nBuy,
+    div: B.divAll, c: c, rate: rate, endY: endC.getFullYear() - 1, reach: reach, yr: yr, hz: hz, good: good.slice(0, 3), bad: bad.slice(0, 2),
+    first: first, day: now.getFullYear() + '.' + (now.getMonth() + 1) + '.' + now.getDate() };
+}
+function mvHTML(D) {
+  var rv = function (at, cls, html) { return '<div class="rv ' + cls + '" data-at="' + at + '">' + html + '</div>'; };
+  var ph = function (k, pos, fit) { return '<div class="mvph' + (fit ? ' fit' : '') + '" data-ph="' + k + '" style="background-position:' + (pos || '50% 30%') + '"></div><div class="mvshade' + (fit ? ' fit' : '') + '"></div>'; };
+  // 지금까지의 자산 곡선
+  var s = D.series.length > 1 ? D.series : [0, D.total], mx = Math.max.apply(null, s), W = 320, H = 110;
+  var pts = s.map(function (v, i) { return [i / (s.length - 1) * W, H - 6 - v / mx * (H - 14)]; });
+  var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join('');
+  // 앞으로 20년 곡선 (가까운 해가 넓게 보이도록 가로축은 제곱근)
+  var fx = function (n) { return Math.sqrt(n / 20) * 300 + 10; }, fmx = D.yr[20], fy = function (v) { return 118 - v / fmx * 104; };
+  var fline = D.yr.map(function (v, n) { return (n ? 'L' : 'M') + fx(n).toFixed(1) + ' ' + fy(v).toFixed(1); }).join('');
+  var gy = fy(D.goal);
+  var reachTxt = D.reach ? (D.reach.now ? '이미 넘었어' : D.reach.y + '년 ' + D.reach.m + '월') : '조금 더 멀리';
+  var h = '';
+  h += '<div class="mvsc s1" data-a="0" data-b="6">' + ph('open', '50% 40%', 1) +
+    '<div class="mvtx bottom">' + rv(0.5, 'k1', '지치는 날엔,') + rv(1.7, 'k1', '여기로 돌아와.') + rv(3.3, 'k3', D.months + '개월째. 우리는 이만큼 왔어.') + '</div></div>';
+  h += '<div class="mvsc s2" data-a="6" data-b="15"><div class="mvtx top">' + rv(0.2, 'lab', '지금, 우리 자산') + '<div class="rv num" data-at="0.4" data-role="total"></div></div>' +
+    '<svg class="mvchart" viewBox="0 0 320 110" preserveAspectRatio="none"><defs><linearGradient id="mvg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c969" stop-opacity=".38"/><stop offset="1" stop-color="#f3c969" stop-opacity="0"/></linearGradient></defs>' +
+    '<path data-role="area" d="' + line + 'L' + W + ' ' + H + 'L0 ' + H + 'Z" fill="url(#mvg)"/><path data-role="line" d="' + line + '" fill="none" stroke="#f3c969" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" vector-effect="non-scaling-stroke"/></svg>' +
+    '<div class="mvaxis"><span>' + (D.first ? D.first.slice(2).replace('-', '.') + ' 시작' : '시작') + '</span><span>오늘</span></div>' +
+    '<div class="mvstats">' + rv(4.3, 'st', '<b>' + mvEok(D.invested) + '</b><span>우리가 넣은 돈</span>') + rv(5.2, 'st', '<b>' + mvEok(D.div) + '</b><span>받은 배당</span>') + rv(6.1, 'st', '<b>' + D.nBuy.toLocaleString('ko-KR') + '<i>번</i></b><span>' + D.months + '개월의 매수</span>') + '</div></div>';
+  h += '<div class="mvsc s3" data-a="15" data-b="24"><div class="mvtx top">' + rv(0.2, 'k2', '잘해온 것') +
+    D.good.map(function (g, i) { return rv(0.9 + i * 0.9, 'li ok', '<em></em>' + g); }).join('') +
+    rv(4.2, 'k2 mt', '더 분발할 것') + D.bad.map(function (g, i) { return rv(4.9 + i * 0.9, 'li todo', '<em></em>' + g); }).join('') + '</div></div>';
+  h += '<div class="mvsc s4" data-a="24" data-b="32"><div class="mvring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="7"/>' +
+    '<circle data-role="ring" cx="60" cy="60" r="52" fill="none" stroke="#f3c969" stroke-width="7" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 60 60)"/></svg>' +
+    '<div class="in"><b data-role="pct">0%</b><span>' + eok(D.goal) + ' 중</span></div></div>' +
+    '<div class="mvtx bottom c">' + rv(2.2, 'k2', '남은 건 ' + mvEok(D.left)) + rv(3.4, 'k3', '계획대로면 <u>' + reachTxt + '</u>') + rv(5.0, 'k3 dim', '멀어 보여도, 불가능한 숫자가 아니야.') + '</div></div>';
+  h += '<div class="mvsc s5" data-a="32" data-b="47">' + ph('future', '50% 40%') + '<div class="mvshade deep"></div>' +
+    '<div class="mvtx top"><div class="fstep"><b data-role="fn"></b><span data-role="fy"></span></div><div class="num" data-role="fv"></div><div class="fpass" data-role="fp"></div></div>' +
+    '<svg class="mvfut" viewBox="0 0 320 124"><defs><clipPath id="mvclip"><rect data-role="clip" x="0" y="0" width="0" height="124"/></clipPath></defs>' +
+    (gy > 8 ? '<line x1="10" x2="312" y1="' + gy.toFixed(1) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="3 4"/><text x="312" y="' + (gy - 4).toFixed(1) + '" text-anchor="end" class="gl">' + eok(D.goal) + '</text>' : '') +
+    '<path d="' + fline + '" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="2"/><path d="' + fline + '" fill="none" stroke="#f3c969" stroke-width="3" stroke-linecap="round" clip-path="url(#mvclip)"/>' +
+    '<circle data-role="dot" r="5" fill="#fff" stroke="#f3c969" stroke-width="3"/></svg>' +
+    '<div class="mvtx bottom"><div class="fline" data-role="fl"></div><div class="fkids" data-role="fk"></div><div class="fchips">' + D.hz.map(function (z) { return '<span>' + z.n + '년</span>'; }).join('') + '</div></div></div>';
+  h += '<div class="mvsc s6" data-a="47" data-b="54">' +
+    [['study', '50% 25%', '아이들은, 하고 싶은 공부를.'], ['travel', '50% 40%', '우리는, 가고 싶은 곳을.'], ['together', '50% 30%', '그리고 넷이 함께 있는 시간을.']].map(function (x, i) {
+      return '<div class="sub" data-i="' + i + '">' + ph(x[0], x[1], i > 0) + '<div class="mvtx bottom"><div class="k1">' + x[2] + '</div></div></div>';
+    }).join('') + '<div class="mvtx top"><div class="lab">목표에 닿으면</div></div></div>';
+  h += '<div class="mvsc s7" data-a="54" data-b="58">' + ph('end', '50% 50%', 1) + '<div class="mvtx bottom">' + rv(0.4, 'k1', '오늘의 한 주가') + rv(1.2, 'k1', '그날을 만든다.') + rv(2.3, 'k3', '꾹 참고, 계속 가자.') + '</div></div>';
+  return '<div class="mv"><div class="mvstage" role="img" aria-label="우리 가족 자산 여정 영상">' + h + '<div class="mvbig" aria-hidden="true">▶</div></div>' +
+    '<div class="mvctl"><button type="button" class="mvpp" aria-label="재생 또는 일시정지">❚❚</button><input type="range" class="mvseek" min="0" max="' + MV_LEN + '" step="0.1" value="0" aria-label="재생 위치"><span class="mvtime">00:00 / 00:' + MV_LEN + '</span></div>' +
+    '<p class="mvnote">' + D.day + ' 기준. 앞으로는 월 ' + mvMan(D.c) + '원 적립(목표비중 탭 값, ' + D.endY + '년까지), 연 ' + Math.round(D.rate * 100) + '% 수익, 연 4% 인출을 가정한 예상이며 실제와 다를 수 있습니다.</p></div>';
+}
+function mvMount() {
+  var root = document.getElementById('mvRoot');
+  if (!root || root.dataset.on) return;
+  root.dataset.on = '1';
+  var D = mvData(ctx()); root.innerHTML = mvHTML(D);
+  var q = function (s) { return root.querySelector(s); }, stage = q('.mvstage');
+  var fit = function () { var wd = stage.clientWidth; if (wd) stage.style.fontSize = (wd / 36) + 'px'; }; fit();
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(stage);
+  var scenes = [].map.call(root.querySelectorAll('.mvsc'), function (el) {
+    var r = function (k) { return el.querySelector('[data-role="' + k + '"]'); };
+    return { el: el, a: +el.dataset.a, b: +el.dataset.b, ph: el.querySelector(':scope > .mvph'), r: r,
+      rev: [].map.call(el.querySelectorAll('.rv'), function (x) { return { el: x, at: +x.dataset.at }; }), subs: [].slice.call(el.querySelectorAll('.sub')) };
+  });
+  var upd = {
+    1: function (lt, sc) { sc.r('total').innerHTML = mvEok(D.total * mvEase(mvSeg(lt, 0.4, 2.4))); var p = mvEase(mvSeg(lt, 1.4, 4.2)); sc.r('line').style.strokeDashoffset = 1 - p; sc.r('area').style.opacity = mvSeg(lt, 2.6, 4.4); },
+    3: function (lt, sc) { var p = mvEase(mvSeg(lt, 0.3, 2.4)) * D.pct; sc.r('ring').setAttribute('stroke-dasharray', (p * 100).toFixed(2) + ' 100'); sc.r('pct').textContent = (Math.round(p * 1000) / 10).toFixed(1) + '%'; },
+    4: function (lt, sc) {
+      var k = Math.min(5, Math.floor(lt / 2.5)), sl = lt - k * 2.5, z = D.hz[k], prev = k ? D.hz[k - 1] : { n: 0, v: D.total }, p = mvEase(mvSeg(sl, 0, 1.3));
+      var n = prev.n + (z.n - prev.n) * p, v = prev.v + (z.v - prev.v) * p, o = k < 5 ? Math.min(mvSeg(sl, 0, 0.35), 1 - mvSeg(sl, 2.25, 2.5)) : mvSeg(sl, 0, 0.35);
+      sc.r('fn').textContent = z.n + '년 뒤'; sc.r('fy').textContent = z.year + '년'; sc.r('fv').innerHTML = mvEok(v);
+      sc.r('fp').innerHTML = '일하지 않아도 매달 <b>' + mvMan(v * 0.04 / 12) + '원</b>'; sc.r('fl').textContent = z.line; sc.r('fk').textContent = z.kids;
+      ['fn', 'fy', 'fl', 'fk'].forEach(function (x) { sc.r(x).style.opacity = o; });
+      var lo = Math.floor(n), hi = Math.min(20, lo + 1), yv = D.yr[lo] + (D.yr[hi] - D.yr[lo]) * (n - lo), X = Math.sqrt(n / 20) * 300 + 10, Y = 118 - yv / D.yr[20] * 104;
+      sc.r('clip').setAttribute('width', X.toFixed(1)); sc.r('dot').setAttribute('cx', X.toFixed(1)); sc.r('dot').setAttribute('cy', Y.toFixed(1));
+      [].forEach.call(sc.el.querySelectorAll('.fchips span'), function (c, i) { c.className = i === k ? 'on' : i < k ? 'done' : ''; });
+    },
+    5: function (lt, sc) { var d = 7 / 3; sc.subs.forEach(function (s, i) { var a = i * d, o = Math.min(mvSeg(lt, a, a + 0.5), i < 2 ? 1 - mvSeg(lt, a + d, a + d + 0.5) : 1); s.style.opacity = o; var im = s.querySelector('.mvph'); im.style.transform = 'scale(' + (1.04 + 0.06 * mvSeg(lt, a, a + d + 0.5)) + ')'; }); }
+  };
+  var pp = q('.mvpp'), seek = q('.mvseek'), tm = q('.mvtime'), big = q('.mvbig'), f2 = function (x) { x = Math.floor(x); return '00:' + (x < 10 ? '0' : '') + x; };
+  var draw = function () {
+    var t = MV.t;
+    scenes.forEach(function (sc, i) {
+      var lastS = i === scenes.length - 1, vis = t >= sc.a && (t < sc.b || lastS);
+      sc.el.style.display = vis ? '' : 'none'; if (!vis) return;
+      var lt = t - sc.a; sc.el.style.opacity = Math.min(mvSeg(lt, 0, 0.5), lastS ? 1 : 1 - mvSeg(t, sc.b - 0.45, sc.b));
+      sc.rev.forEach(function (r) { var p = mvEase(mvSeg(lt, r.at, r.at + 0.7)); r.el.style.opacity = p; r.el.style.transform = 'translateY(' + ((1 - p) * 0.8).toFixed(3) + 'em)'; });
+      if (sc.ph) sc.ph.style.transform = 'scale(' + (1.03 + 0.09 * lt / (sc.b - sc.a)) + ')';
+      if (upd[i]) upd[i](lt, sc);
+    });
+    seek.value = t; seek.style.setProperty('--p', (t / MV_LEN * 100) + '%'); tm.textContent = f2(t) + ' / ' + f2(MV_LEN);
+    pp.textContent = MV.ended ? '↻' : MV.playing ? '❚❚' : '▶'; big.style.opacity = MV.playing ? 0 : 1; big.textContent = MV.ended ? '↻' : '▶';
+  };
+  var tick = function (now) {
+    if (!root.isConnected) { MV.playing = false; return; }
+    if (MV.playing) { MV.t += Math.min(0.1, (now - MV.last) / 1000); MV.last = now; if (MV.t >= MV_LEN) { MV.t = MV_LEN; MV.playing = false; MV.ended = true; } draw(); if (MV.playing) MV.raf = requestAnimationFrame(tick); }
+  };
+  var play = function () { if (MV.ended) { MV.t = 0; MV.ended = false; } if (MV.playing) return; MV.playing = true; MV.last = performance.now(); cancelAnimationFrame(MV.raf); MV.raf = requestAnimationFrame(tick); draw(); };
+  var pause = function () { MV.playing = false; draw(); };
+  var toggle = function () { MV.user = true; MV.playing ? pause() : play(); };
+  pp.addEventListener('click', toggle); stage.addEventListener('click', toggle);
+  seek.addEventListener('input', function () { MV.t = +seek.value; MV.ended = MV.t >= MV_LEN; draw(); });
+  MV.seek = function (t) { MV.t = t; MV.ended = false; draw(); }; MV.play = play; MV.pause = pause;
+  if (MV.t >= MV_LEN) { MV.t = 0; MV.ended = false; }
+  MV.playing = false; draw();
+  // 화면에 보이면 바로 재생, 다른 탭으로 가면 멈춤 (직접 멈춘 뒤에는 자동으로 다시 틀지 않음)
+  var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (MV.io) MV.io.disconnect();
+  if (window.IntersectionObserver) { MV.io = new IntersectionObserver(function (es) { var on = es[es.length - 1].isIntersecting; if (on && !MV.user && !MV.ended && !calm) play(); else if (!on && MV.playing) { pause(); MV.user = false; } }, { threshold: 0.35 }); MV.io.observe(stage); }
+  var setPh = function (m) { MV.photos = m || {}; [].forEach.call(root.querySelectorAll('[data-ph]'), function (el) { var u = MV.photos[el.dataset.ph]; if (u) { el.style.backgroundImage = 'url(' + u + ')'; el.classList.add('has'); } }); };
+  if (MV.photos) setPh(MV.photos);
+  if (window.__photos) window.__photos(setPh).then(setPh).catch(function () {});
+}
+document.addEventListener('visibilitychange', function () { if (document.hidden && MV.playing && MV.pause) MV.pause(); });
 
 /* ---------- 자녀증여 ---------- */
 function kidPrice(t) { var m = (S.kids.priceMap || {})[t]; var x = m && tk(m); return x ? n(x.price) : 0; }
