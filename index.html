@@ -393,6 +393,13 @@ td { border-bottom-color: var(--line); }
 .mvph.fit { inset: 0 0 auto 0; height: 63%; transform-origin: 50% 50%; }
 .mvshade.fit { background: linear-gradient(180deg, rgba(7, 9, 15, .25) 0%, rgba(7, 9, 15, 0) 22%, rgba(7, 9, 15, 0) 40%, #07090f 63%, #07090f 100%); }
 .mvstage .li { border: 0; }
+.mvshade.mid { background: linear-gradient(180deg, rgba(7, 9, 15, .78) 0%, rgba(7, 9, 15, .62) 45%, rgba(7, 9, 15, .9) 100%); }
+.mvshade.fut { background: linear-gradient(180deg, rgba(7, 9, 15, .86) 0%, rgba(7, 9, 15, .5) 42%, rgba(7, 9, 15, .55) 60%, rgba(7, 9, 15, .92) 82%, rgba(7, 9, 15, .96) 100%); }
+.fbg { position: absolute; inset: 0; overflow: hidden; }
+.mvring .rph { position: absolute; inset: 9.5%; border-radius: 50%; background-size: cover; background-position: 50% 40%; opacity: .5; }
+.mvring .rph::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(7, 9, 15, .15) 0%, rgba(7, 9, 15, .75) 100%); }
+.mvring .in b, .mvring .in span { text-shadow: 0 2px 12px rgba(0, 0, 0, .8); }
+.mvring .in span { color: rgba(242, 244, 251, .85); }
 .mvshade.deep { background: rgba(7, 9, 15, .8); }
 .mvtx { position: absolute; left: 2.4em; right: 2.4em; }
 .mvtx.top { top: 2.6em; } .mvtx.bottom { bottom: 2.6em; } .mvtx.c { text-align: center; }
@@ -447,6 +454,10 @@ td { border-bottom-color: var(--line); }
 .mvseek::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%; background: #f3c969; border: 2px solid #fff; }
 .mvseek::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #f3c969; border: 2px solid #fff; }
 .mvtime { flex: none; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.mvrate { display: flex; align-items: center; gap: 6px; padding: 2px 12px 8px; font-size: 12px; color: var(--muted); }
+.mvrate span { margin-right: auto; }
+.mvrate button { border: 1px solid var(--box); background: none; color: var(--text); border-radius: 99px; padding: 5px 11px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.mvrate button.on { background: #f3c969; border-color: #f3c969; color: #1b1405; }
 .mvnote { margin: 0; padding: 0 12px 12px; font-size: 11px; line-height: 1.5; color: var(--muted); }
 #pwaSetup { position: fixed; inset: 0; z-index: 80; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
 #pwaSetup .setup-in { width: 100%; max-width: 420px; display: grid; gap: 12px; }
@@ -1925,6 +1936,7 @@ function mvEok(v) {
   return (e ? e + '<i>억</i>' : '') + (m || !e ? ' ' + m.toLocaleString('ko-KR') + '<i>만</i>' : '');
 }
 function mvMan(v) { return Math.round((v || 0) / 1e4).toLocaleString('ko-KR') + '만'; }
+function mvRate() { var r = 0; try { r = +localStorage.getItem('tj.mvRate'); } catch (e) {} return r > 0 && r < 0.3 ? r : (S.settings.videoRate || 0.08); }
 function mvData(C) {
   var B = C.B, MB = C.MB, st = S.settings, now = new Date(), goal = st.goal || 1e9, total = B.total;
   var series = C.M.rows.filter(function (r) { return r.total > 0; }).map(function (r) { return r.total; });
@@ -1935,7 +1947,7 @@ function mvData(C) {
   var rec = MB.list.slice(-12).filter(function (o) { return o.total > 0; }), c = 0, tg = st.target;
   rec.forEach(function (o) { c += o.total; }); c = rec.length ? Math.round(c / rec.length / 1e5) * 1e5 : 0;
   if (tg && tg.buy > 0) c = tg.buy + (tg.cashInc || 0); // 「목표비중」 탭의 월 매수액 + 월 현금 증가를 우선 사용
-  var rate = st.videoRate || 0.05, mr = Math.pow(1 + rate, 1 / 12) - 1;
+  var rate = mvRate(), mr = Math.pow(1 + rate, 1 / 12) - 1;
   var endC = S.plan && S.plan.target ? new Date(S.plan.target) : new Date(now.getFullYear() + 3, 0, 1);
   var v = total, d = new Date(now.getFullYear(), now.getMonth(), 1), reach = total >= goal ? { now: true } : null, yr = [total];
   for (var i = 1; i <= 240; i++) {
@@ -1946,8 +1958,8 @@ function mvData(C) {
   var kids = ((S.plan && S.plan.people) || []).filter(function (p) { return p.kid && p.birth; });
   var life = function (x) {
     var r = x / goal;
-    return r < 0.5 ? '흔들려도 버틸 힘이 생겨.' : r < 0.7 ? '대출이 무섭지 않은 버팀목이 돼.' : r < 1 ? '여행도 학원도, 망설임이 줄어.' :
-      r < 1.5 ? '목표를 넘었어. 일은 의무가 아니라 선택.' : r < 2.5 ? '자산이 대신 일해. 둘이 함께 쉬어도 돼.' : '아이들 독립까지 돕고도, 노후는 그대로.';
+    return r < 0.5 ? '흔들려도 버틸 힘이 생겨.' : r < 0.7 ? '대출이 무섭지 않은 버팀목이 돼.' : r < 0.85 ? '여행도 학원도, 망설임이 줄어.' : r < 1 ? '목표가 코앞이야. 마음이 먼저 가벼워져.' :
+      r < 1.25 ? '목표를 넘었어. 일은 의무가 아니라 선택.' : r < 1.6 ? '원금은 그대로, 생활비가 알아서 나와.' : r < 2.5 ? '자산이 대신 일해. 둘이 함께 쉬어도 돼.' : '아이들 독립까지 돕고도, 노후는 그대로.';
   };
   var hz = MV_H.map(function (n) {
     var at = new Date(now.getFullYear() + n, now.getMonth(), now.getDate());
@@ -1986,19 +1998,19 @@ function mvHTML(D) {
   var h = '';
   h += '<div class="mvsc s1" data-a="0" data-b="6">' + ph('open', '50% 40%', 1) +
     '<div class="mvtx bottom">' + rv(0.5, 'k1', '지치는 날엔,') + rv(1.7, 'k1', '여기로 돌아와.') + rv(3.3, 'k3', D.months + '개월째. 우리는 이만큼 왔어.') + '</div></div>';
-  h += '<div class="mvsc s2" data-a="6" data-b="15"><div class="mvtx top">' + rv(0.2, 'lab', '지금, 우리 자산') + '<div class="rv num" data-at="0.4" data-role="total"></div></div>' +
+  h += '<div class="mvsc s2" data-a="6" data-b="15">' + ph('start', '50% 40%') + '<div class="mvshade mid"></div><div class="mvtx top">' + rv(0.2, 'lab', '지금, 우리 자산') + '<div class="rv num" data-at="0.4" data-role="total"></div></div>' +
     '<svg class="mvchart" viewBox="0 0 320 110" preserveAspectRatio="none"><defs><linearGradient id="mvg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c969" stop-opacity=".38"/><stop offset="1" stop-color="#f3c969" stop-opacity="0"/></linearGradient></defs>' +
     '<path data-role="area" d="' + line + 'L' + W + ' ' + H + 'L0 ' + H + 'Z" fill="url(#mvg)"/><path data-role="line" d="' + line + '" fill="none" stroke="#f3c969" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" vector-effect="non-scaling-stroke"/></svg>' +
     '<div class="mvaxis"><span>' + (D.first ? D.first.slice(2).replace('-', '.') + ' 시작' : '시작') + '</span><span>오늘</span></div>' +
     '<div class="mvstats">' + rv(4.3, 'st', '<b>' + mvEok(D.invested) + '</b><span>우리가 넣은 돈</span>') + rv(5.2, 'st', '<b>' + mvEok(D.div) + '</b><span>받은 배당</span>') + rv(6.1, 'st', '<b>' + D.nBuy.toLocaleString('ko-KR') + '<i>번</i></b><span>' + D.months + '개월의 매수</span>') + '</div></div>';
-  h += '<div class="mvsc s3" data-a="15" data-b="24"><div class="mvtx top">' + rv(0.2, 'k2', '잘해온 것') +
+  h += '<div class="mvsc s3" data-a="15" data-b="24">' + ph('eval', '50% 40%') + '<div class="mvshade mid"></div><div class="mvtx top">' + rv(0.2, 'k2', '잘해온 것') +
     D.good.map(function (g, i) { return rv(0.9 + i * 0.9, 'li ok', '<em></em>' + g); }).join('') +
     rv(4.2, 'k2 mt', '더 분발할 것') + D.bad.map(function (g, i) { return rv(4.9 + i * 0.9, 'li todo', '<em></em>' + g); }).join('') + '</div></div>';
   h += '<div class="mvsc s4" data-a="24" data-b="32"><div class="mvring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="7"/>' +
     '<circle data-role="ring" cx="60" cy="60" r="52" fill="none" stroke="#f3c969" stroke-width="7" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" transform="rotate(-90 60 60)"/></svg>' +
-    '<div class="in"><b data-role="pct">0%</b><span>' + eok(D.goal) + ' 중</span></div></div>' +
+    '<div class="rph" data-ph="ring"></div><div class="in"><b data-role="pct">0%</b><span>' + eok(D.goal) + ' 중</span></div></div>' +
     '<div class="mvtx bottom c">' + rv(2.2, 'k2', '남은 건 ' + mvEok(D.left)) + rv(3.4, 'k3', '계획대로면 <u>' + reachTxt + '</u>') + rv(5.0, 'k3 dim', '멀어 보여도, 불가능한 숫자가 아니야.') + '</div></div>';
-  h += '<div class="mvsc s5" data-a="32" data-b="47">' + ph('future', '50% 40%') + '<div class="mvshade deep"></div>' +
+  h += '<div class="mvsc s5" data-a="32" data-b="47">' + ['future', 'f2', 'f3', 'f4', 'f5', 'f6'].map(function (k) { return '<div class="fbg"><div class="mvph" data-ph="' + k + '"></div></div>'; }).join('') + '<div class="mvshade fut"></div>' +
     '<div class="mvtx top"><div class="fstep"><b data-role="fn"></b><span data-role="fy"></span></div><div class="num" data-role="fv"></div><div class="fpass" data-role="fp"></div></div>' +
     '<svg class="mvfut" viewBox="0 0 320 124"><defs><clipPath id="mvclip"><rect data-role="clip" x="0" y="0" width="0" height="124"/></clipPath></defs>' +
     (gy > 8 ? '<line x1="10" x2="312" y1="' + gy.toFixed(1) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="3 4"/><text x="312" y="' + (gy - 4).toFixed(1) + '" text-anchor="end" class="gl">' + eok(D.goal) + '</text>' : '') +
@@ -2012,6 +2024,7 @@ function mvHTML(D) {
   h += '<div class="mvsc s7" data-a="54" data-b="58">' + ph('end', '50% 50%', 1) + '<div class="mvtx bottom">' + rv(0.4, 'k1', '오늘의 한 주가') + rv(1.2, 'k1', '그날을 만든다.') + rv(2.3, 'k3', '꾹 참고, 계속 가자.') + '</div></div>';
   return '<div class="mv"><div class="mvstage" role="img" aria-label="우리 가족 자산 여정 영상">' + h + '<div class="mvbig" aria-hidden="true">▶</div></div>' +
     '<div class="mvctl"><button type="button" class="mvpp" aria-label="재생 또는 일시정지">❚❚</button><input type="range" class="mvseek" min="0" max="' + MV_LEN + '" step="0.1" value="0" aria-label="재생 위치"><span class="mvtime">00:00 / 00:' + MV_LEN + '</span></div>' +
+    '<div class="mvrate"><span>수익률 가정</span>' + [0.05, 0.08, 0.1].map(function (r) { return '<button type="button" class="' + (Math.abs(D.rate - r) < 0.001 ? 'on' : '') + '" data-act="mvRate" data-r="' + r + '">연 ' + Math.round(r * 100) + '%</button>'; }).join('') + '</div>' +
     '<p class="mvnote">' + D.day + ' 기준. 앞으로는 월 ' + mvMan(D.c) + '원 적립(목표비중 탭 값, ' + D.endY + '년까지), 연 ' + Math.round(D.rate * 100) + '% 수익, 연 4% 인출을 가정한 예상이며 실제와 다를 수 있습니다.</p></div>';
 }
 function mvMount() {
@@ -2038,6 +2051,7 @@ function mvMount() {
       ['fn', 'fy', 'fl', 'fk'].forEach(function (x) { sc.r(x).style.opacity = o; });
       var lo = Math.floor(n), hi = Math.min(20, lo + 1), yv = D.yr[lo] + (D.yr[hi] - D.yr[lo]) * (n - lo), X = Math.sqrt(n / 20) * 300 + 10, Y = 118 - yv / D.yr[20] * 104;
       sc.r('clip').setAttribute('width', X.toFixed(1)); sc.r('dot').setAttribute('cx', X.toFixed(1)); sc.r('dot').setAttribute('cy', Y.toFixed(1));
+      [].forEach.call(sc.el.querySelectorAll('.fbg'), function (g, i) { g.style.opacity = i === k ? (k ? mvSeg(sl, 0, 0.7) : 1) : i === k - 1 ? 1 : 0; if (i === k) g.firstChild.style.transform = 'scale(' + (1.02 + 0.05 * sl / 2.5) + ')'; });
       [].forEach.call(sc.el.querySelectorAll('.fchips span'), function (c, i) { c.className = i === k ? 'on' : i < k ? 'done' : ''; });
     },
     5: function (lt, sc) { var d = 7 / 3; sc.subs.forEach(function (s, i) { var a = i * d, o = Math.min(mvSeg(lt, a, a + 0.5), i < 2 ? 1 - mvSeg(lt, a + d, a + d + 0.5) : 1); s.style.opacity = o; var im = s.querySelector('.mvph'); im.style.transform = 'scale(' + (1.04 + 0.06 * mvSeg(lt, a, a + d + 0.5)) + ')'; }); }
@@ -2474,6 +2488,7 @@ document.addEventListener('click', function (e) {
     case 'tgStep': (function () { var f = a.dataset.f; tgSet(f, tgGet(f) + (+a.dataset.d)); var inp = a.parentNode.querySelector('input'); if (inp) inp.value = tgFmt(f); tgUpdate(); })(); break;
     case 'tgReset': UI.tg = null; tgDraft(); UIV++; render(); break;
     case 'tgSave': tgSave(); break;
+    case 'mvRate': try { localStorage.setItem('tj.mvRate', a.dataset.r); } catch (e) {} (function () { var r = document.getElementById('mvRoot'); if (r) { delete r.dataset.on; MV.user = false; mvMount(); } })(); break;
     case 'theme': localSet('theme', a.dataset.v); applyTheme(); rerender(); break;
   }
 });
